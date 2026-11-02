@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 3 IEP Progress Monitoring & Re-evaluation Training Hub</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #2ecc71;
+            --warning: #e67e22;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 12px 20px;
+            background: var(--white);
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn.active, .nav-btn:hover {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        .tab-content {
+            display: none;
+            background: var(--white);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--light);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: var(--secondary);
+            margin: 15px 0 10px 0;
+        }
+
+        /* Calculator Styles */
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .calc-card {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        input[type="number"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button.action-btn {
+            background: var(--accent);
+            color: var(--white);
+            border: none;
+            padding: 10px 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        button.action-btn:hover {
+            opacity: 0.9;
+        }
+
+        .result-box {
+            margin-top: 15px;
+            padding: 15px;
+            background: #e8f8f5;
+            border: 1px solid var(--accent);
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        /* Tables & Lists */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .tag-free { background-color: var(--accent); }
+        .tag-india { background-color: var(--warning); }
+
+        /* Checklist */
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px;
+            background: #f8fafc;
+            margin-bottom: 8px;
+            border-radius: 5px;
+        }
+
+        .checklist-item input {
+            margin-top: 4px;
+            transform: scale(1.2);
+        }
+
+        /* Printable Summary */
+        @media print {
+            nav, .nav-btn, button { display: none !important; }
+            .tab-content { display: block !important; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Class 3 IEP Progress Monitoring & Re-evaluation Training Hub</h1>
+        <p>Interactive Toolkit for Inclusive Educators & Resource Teachers (Ages 8–9 Focus)</p>
+    </header>
+
+    <nav>
+        <button class="nav-btn active" onclick="switchTab('tab1')">1. Data Methods Guide</button>
+        <button class="nav-btn" onclick="switchTab('tab2')">2. CBM & ORF Calculator</button>
+        <button class="nav-btn" onclick="switchTab('tab3')">3. Assessment Directory (India/Free)</button>
+        <button class="nav-btn" onclick="switchTab('tab4')">4. Re-evaluation Helper</button>
+    </nav>
+
+    <!-- TAB 1: DATA COLLECTION SYSTEMS -->
+    <div id="tab1" class="tab-content active">
+        <h2>Select the Right Data Collection System (Class 3 Focus)</h2>
+        <p>Choose an IEP Target Goal type below to view the recommended progress monitoring system and example setup:</p>
+        
+        <div class="form-group" style="margin-top: 20px; max-width: 500px;">
+            <label for="goalType">Select Class 3 IEP Goal Domain:</label>
+            <select id="goalType" onchange="updateSystemGuide()">
+                <option value="">-- Choose Goal Domain --</option>
+                <option value="orf">Oral Reading Fluency / Accuracy</option>
+                <option value="math">Math Calculation Speed / Accuracy</option>
+                <option value="behavior">On-Task Behavior / Sitting Tolerance</option>
+                <option value="writing">Spelling & Sentence Construction</option>
+            </select>
+        </div>
+
+        <div id="systemGuideResult" class="calc-card" style="display:none; margin-top: 20px;">
+            <h3 id="guideTitle"></h3>
+            <p><strong>Primary Method:</strong> <span id="guideMethod"></span></p>
+            <p><strong>Frequency:</strong> <span id="guideFreq"></span></p>
+            <p style="margin-top:10px;"><strong>Classroom Procedure:</strong> <span id="guideProc"></span></p>
+            <p style="margin-top:10px;"><strong>Sample Goal Statement:</strong> <i id="guideGoal"></i></p>
+        </div>
+    </div>
+
+    <!-- TAB 2: CBM & ORF CALCULATOR -->
+    <div id="tab2" class="tab-content">
+        <h2>Curriculum-Based Measurement (CBM) Calculator</h2>
+        <p>Calculate student progress metrics for Oral Reading Fluency (ORF) and Math Digits Correct.</p>
+        
+        <div class="calculator-grid">
+            <!-- ORF Calc -->
+            <div class="calc-card">
+                <h3>Oral Reading Fluency (ORF) Probe</h3>
+                <p><small>1-Minute Grade 3 Passage Probe</small></p>
+                <br>
+                <div class="form-group">
+                    <label>Total Words Read:</label>
+                    <input type="number" id="orfTotal" placeholder="e.g. 85">
+                </div>
+                <div class="form-group">
+                    <label>Errors (Omissions, Substitutions):</label>
+                    <input type="number" id="orfErrors" placeholder="e.g. 7">
+                </div>
+                <button class="action-btn" onclick="calcORF()">Calculate WCPM</button>
+
+                <div id="orfResult" class="result-box" style="display:none;"></div>
+            </div>
+
+            <!-- Math CBM Calc -->
+            <div class="calc-card">
+                <h3>Math Computation CBM</h3>
+                <p><small>2-Minute Class 3 Worksheet Probe (Add/Sub with regrouping)</small></p>
+                <br>
+                <div class="form-group">
+                    <label>Total Digits Correct (DC):</label>
+                    <input type="number" id="mathDC" placeholder="e.g. 24">
+                </div>
+                <div class="form-group">
+                    <label>Target Class 3 Spring Goal (DC):</label>
+                    <input type="number" id="mathTarget" value="30">
+                </div>
+                <button class="action-btn" onclick="calcMath()">Evaluate Progress</button>
+
+                <div id="mathResult" class="result-box" style="display:none;"></div>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px; background: #f0f4f8; padding: 15px; border-radius: 8px;">
+            <h4>Class 3 ORF Benchmark Reference (Hasbrouck & Tindal Norms):</h4>
+            <ul>
+                <li><strong>Fall (Beginning of Class 3):</strong> 50th Percentile = 71 WCPM</li>
+                <li><strong>Winter (Mid Class 3):</strong> 50th Percentile = 92 WCPM</li>
+                <li><strong>Spring (End Class 3):</strong> 50th Percentile = 107 WCPM</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- TAB 3: ONLINE ASSESSMENTS DIRECTORY -->
+    <div id="tab3" class="tab-content">
+        <h2>Curated Class 3 Diagnostic & CBM Tests</h2>
+        <p>Readily available free online tests, probes, and Indian diagnostic adaptations:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Domain</th>
+                    <th>Tool / Test Name</th>
+                    <th>Type / Source</th>
+                    <th>Class 3 Focus</th>
+                    <th>Access</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Reading Fluency</td>
+                    <td>Intervention Central CBM Warehouse</td>
+                    <td><span class="tag tag-free">Free Global</span></td>
+                    <td>Automated 1-min reading passage generator for Class 3 level.</td>
+                    <td><a href="https://www.interventioncentral.org" target="_blank">InterventionCentral.org</a></td>
+                </tr>
+                <tr>
+                    <td>Functional/Academic</td>
+                    <td>NIEPID FACP (Functional Assessment Checklist)</td>
+                    <td><span class="tag tag-india">Indian Standard</span></td>
+                    <td>Stage 3 / Class 3 reading, writing, and functional arithmetic tracking.</td>
+                    <td><a href="https://www.niepid.nic.in" target="_blank">NIEPID Official Portal</a></td>
+                </tr>
+                <tr>
+                    <td>Reading Comprehension</td>
+                    <td>ReadTheory Free Reading Program</td>
+                    <td><span class="tag tag-free">Free Online</span></td>
+                    <td>Adaptive passage comprehension exercises with instant data tracking.</td>
+                    <td><a href="https://readtheory.org" target="_blank">ReadTheory.org</a></td>
+                </tr>
+                <tr>
+                    <td>Math Computation</td>
+                    <td>EasyCBM (Lite Tier)</td>
+                    <td><span class="tag tag-free">Free Online</span></td>
+                    <td>Grade 3 Math probes (NBT, Addition/Subtraction with regrouping).</td>
+                    <td><a href="https://easycbm.com" target="_blank">EasyCBM.com</a></td>
+                </tr>
+                <tr>
+                    <td>Behavior / Autism</td>
+                    <td>INCLEN Diagnostic Tool for ASD / ADHD (INDT)</td>
+                    <td><span class="tag tag-india">Indian Context</span></td>
+                    <td>Standardized clinical observations and behavior ratings for Indian schools.</td>
+                    <td>Open Access Research / Clinical Repositories</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- TAB 4: RE-EVALUATION HELPER -->
+    <div id="tab4" class="tab-content">
+        <h2>Class 3 Re-evaluation Readiness & Report Generator</h2>
+        <p>Check the required data components before preparing the Triennial/Annual Re-evaluation report:</p>
+
+        <div style="margin-top: 15px;">
+            <div class="checklist-item">
+                <input type="checkbox" id="chk1">
+                <label for="chk1">At least 8-10 CBM progress data points collected over 8-12 weeks.</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="chk2">
+                <label for="chk2">Updated Functional Performance (FACP / Classroom Observation records).</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="chk3">
+                <label for="chk3">Input from Subject Teachers, Special Educator, and Parents.</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="chk4">
+                <label for="chk4">Evaluation of assistive technology / accommodations effectiveness.</label>
+            </div>
+        </div>
+
+        <h3 style="margin-top: 25px;">Generate Draft Re-evaluation Summary Statement</h3>
+        <div class="form-group">
+            <label>Student Name:</label>
+            <input type="text" id="stuName" placeholder="e.g. Aarav Sharma">
+        </div>
+        <div class="form-group">
+            <label>Primary Goal Domain Evaluated:</label>
+            <input type="text" id="stuDomain" placeholder="e.g. Class 3 Oral Reading Fluency & Decoding">
+        </div>
+        <div class="form-group">
+            <label>Data Trend Summary:</label>
+            <textarea id="stuTrend" rows="3" placeholder="e.g. Baseline was 42 WCPM. Over 10 weeks of multisensory reading instruction, Aarav progressed to 68 WCPM, demonstrating steady positive growth toward the target of 75 WCPM."></textarea>
+        </div>
+        <button class="action-btn" onclick="generateReport()">Generate Summary Statement</button>
+
+        <div id="reportOutput" class="result-box" style="display:none; white-space: pre-wrap; margin-top:20px;"></div>
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function updateSystemGuide() {
+            const val = document.getElementById('goalType').value;
+            const res = document.getElementById('systemGuideResult');
+            
+            if(!val) { res.style.display = 'none'; return; }
+
+            res.style.display = 'block';
+            if(val === 'orf') {
+                document.getElementById('guideTitle').innerText = "Oral Reading Fluency (ORF) System";
+                document.getElementById('guideMethod').innerText = "1-Minute Curriculum-Based Measurement (CBM) Probe";
+                document.getElementById('guideFreq').innerText = "Weekly or Bi-weekly";
+                document.getElementById('guideProc').innerText = "Have the student read a unread Class 3 passage aloud for 60 seconds. Mark errors on a copy sheet. Calculate Words Correct Per Minute (WCPM).";
+                document.getElementById('guideGoal').innerText = "By the end of Term 2, given a Class 3 passage, student will read 75 WCPM with at least 90% accuracy across 3 consecutive trials.";
+            } else if(val === 'math') {
+                document.getElementById('guideTitle').innerText = "Math Calculation Speed & Accuracy System";
+                document.getElementById('guideMethod').innerText = "Timed Computation Probe (2 Minutes)";
+                document.getElementById('guideFreq').innerText = "Bi-weekly";
+                document.getElementById('guideProc').innerText = "Provide a 25-problem sheet of Class 3 mixed addition/subtraction with regrouping. Count Digits Correct (DC) rather than just correct final answers.";
+                document.getElementById('guideGoal').innerText = "Given 2-digit addition problems with regrouping, student will complete 20 Digits Correct in 2 minutes.";
+            } else if(val === 'behavior') {
+                document.getElementById('guideTitle').innerText = "On-Task / Sitting Behavior System";
+                document.getElementById('guideMethod').innerText = "Momentary Time Sampling / Interval Recording";
+                document.getElementById('guideFreq').innerText = "3 times per week during 15-minute Class 3 independent study";
+                document.getElementById('guideProc').innerText = "Set a 1-minute interval timer. Every minute on the chime, look up and mark '+' if the student is engaged in the task and '-' if off-task.";
+                document.getElementById('guideGoal').innerText = "During 15-minute independent math tasks, student will remain on-task for 80% of observed intervals across 4 consecutive weeks.";
+            } else if(val === 'writing') {
+                document.getElementById('guideTitle').innerText = "Spelling & Sentence Construction System";
+                document.getElementById('guideMethod').innerText = "Correct Writing Sequences (CWS) / Work Sample Rubric";
+                document.getElementById('guideFreq').innerText = "Weekly sample";
+                document.getElementById('guideProc').innerText = "Give a 3-minute story prompt. Count Total Words Written (TWW) and pairs of adjacent correct words/punctuation (CWS).";
+                document.getElementById('guideGoal').innerText = "Given a Class 3 writing prompt, student will produce 12 Correct Writing Sequences in a 3-minute sample.";
+            }
+        }
+
+        function calcORF() {
+            const total = parseFloat(document.getElementById('orfTotal').value);
+            const errors = parseFloat(document.getElementById('orfErrors').value) || 0;
+            const res = document.getElementById('orfResult');
+
+            if(isNaN(total) || total <= 0) {
+                alert("Please enter a valid number of total words read.");
+                return;
+            }
+
+            const wcpm = total - errors;
+            const accuracy = ((wcpm / total) * 100).toFixed(1);
+
+            res.style.display = 'block';
+            res.innerHTML = `
+                <p><strong>Result:</strong> ${wcpm} WCPM</p>
+                <p><strong>Accuracy Rate:</strong> ${accuracy}%</p>
+                <p><strong>Class 3 Mid-Year Benchmark Comparison:</strong> ${wcpm >= 92 ? ' At or above 50th percentile (92 WCPM Target)' : ' Below 50th percentile target (Requires targeted intervention)'}</p>
+            `;
+        }
+
+        function calcMath() {
+            const dc = parseFloat(document.getElementById('mathDC').value);
+            const target = parseFloat(document.getElementById('mathTarget').value);
+            const res = document.getElementById('mathResult');
+
+            if(isNaN(dc)) {
+                alert("Please enter Digits Correct.");
+                return;
+            }
+
+            const pct = ((dc / target) * 100).toFixed(0);
+            res.style.display = 'block';
+            res.innerHTML = `
+                <p><strong>Current Digits Correct:</strong> ${dc} DC</p>
+                <p><strong>Progress to Goal:</strong> ${pct}% of target (${target} DC)</p>
+                <p><strong>Status:</strong> ${dc >= target ? ' Goal Achieved! Consider increasing difficulty.' : ' Goal in Progress. Maintain current instructional intensity.'}</p>
+            `;
+        }
+
+        function generateReport() {
+            const name = document.getElementById('stuName').value || "The student";
+            const domain = document.getElementById('stuDomain').value || "Class 3 Academic Goals";
+            const trend = document.getElementById('stuTrend').value || "Progress monitored via CBM probes over the evaluation period.";
+
+            const output = `RE-EVALUATION PROGRESS SUMMARY REPORT
+Student Name: ${name}
+Target Domain: ${domain}
+Date: ${new Date().toLocaleDateString()}
+
+SUMMARY OF PROGRESS DATA:
+${trend}
+
+RECOMMENDATION:
+Based on the objective data collected above, it is recommended to continue current IEP accommodations with updated goals targeting Class 3 level masteries.`;
+
+            const res = document.getElementById('reportOutput');
+            res.style.display = 'block';
+            res.textContent = output;
+        }
+    </script>
+</body>
+</html>

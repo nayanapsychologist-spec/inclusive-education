@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IEP Progress Monitoring & Re-evaluation Training - Class 3</title>
+    <!-- Chart.js for Data Visualisation -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #0284c7;
+            --accent: #f59e0b;
+            --light: #f8fafc;
+            --dark: #0f172a;
+            --success: #16a34a;
+            --danger: #dc2626;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 { margin: 0; font-size: 1.8rem; }
+        header p { margin: 5px 0 0 0; opacity: 0.9; font-size: 0.95rem; }
+
+        nav {
+            display: flex;
+            background-color: var(--secondary);
+            padding: 0 40px;
+            overflow-x: auto;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            color: white;
+            padding: 14px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            white-space: nowrap;
+        }
+
+        nav button:hover, nav button.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-bottom: 4px solid var(--accent);
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+
+        h2 { color: var(--primary); border-bottom: 2px solid var(--light); padding-bottom: 10px; margin-top: 0; }
+        h3 { color: var(--secondary); }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media(max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+
+        /* Form elements */
+        label { display: block; font-weight: bold; margin-top: 10px; }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button.btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        button.btn:hover { background-color: var(--primary); }
+
+        /* Timer Box */
+        .timer-box {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            background: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            color: var(--primary);
+        }
+
+        .passage-box {
+            background: #fffbe0;
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* Results Display */
+        .result-box {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table, th, td { border: 1px solid #cbd5e1; }
+        th, td { padding: 10px; text-align: left; }
+        th { background-color: #f1f5f9; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Inclusive Education Teacher Training Workshop</h1>
+        <p>Topic: Class 3 IEP Progress Monitoring Data Collection & Re-evaluations (India Framework)</p>
+    </header>
+
+    <nav>
+        <button class="active" onclick="showTab('overview')">1. Module Overview</button>
+        <button onclick="showTab('fluency')">2. Oral Reading Fluency Probe</button>
+        <button onclick="showTab('comprehension')">3. Reading Comprehension Test</button>
+        <button onclick="showTab('math')">4. Math Skills Probe</button>
+        <button onclick="showTab('tracker')">5. Progress Tracker & Graph</button>
+        <button onclick="showTab('reeval')">6. Re-evaluation Framework</button>
+    </nav>
+
+    <div class="container">
+
+        <!-- TAB 1: OVERVIEW -->
+        <div id="overview" class="tab-content active">
+            <div class="card">
+                <h2>Module Context: Class 3 IEP Data Collection</h2>
+                <p>In Class 3 (Grade 3), students undergo a critical developmental shift from <em>learning to read</em> to <em>reading to learn</em>, alongside acquiring multi-digit arithmetic operations. For students with disabilities, systematic progress monitoring ensures timely intervention adjustments.</p>
+                
+                <h3>Key Objectives</h3>
+                <ul>
+                    <li>Learn to administer free diagnostic tests aligned with <strong>ASER (Pratham)</strong> and <strong>NCERT / NIPUN Bharat</strong> benchmarks.</li>
+                    <li>Collect reliable quantitative data across key domains (Reading Fluency, Comprehension, Mathematics, Behavior).</li>
+                    <li>Utilize data to make informed re-evaluation decisions under the <strong>RPWD Act 2016</strong> framework.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>Data Collection Methods Summary</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>When to Use</th>
+                            <th>Class 3 Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Frequency / Event Recording</strong></td>
+                            <td>Discrete behaviors with clear start & end.</td>
+                            <td>Counting unprompted sight words read correctly.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Duration Recording</strong></td>
+                            <td>Measuring length of time a behavior lasts.</td>
+                            <td>Time student stays focused on an independent writing task.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Latency Recording</strong></td>
+                            <td>Measuring time from prompt to initiation.</td>
+                            <td>Time taken to open text book after instruction.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Permanent Product</strong></td>
+                            <td>Reviewing completed work samples.</td>
+                            <td>Scoring math worksheets or handwriting sheets using a rubric.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 2: FLUENCY PROBE -->
+        <div id="fluency" class="tab-content">
+            <div class="card">
+                <h2>Class 3 Reading Fluency Assessment (ASER Benchmark Passage)</h2>
+                <p><strong>Instructions:</strong> Have the student read the passage out loud. Click 'Start Timer'. Mark any misread or skipped words. Click 'Stop Timer' at 60 seconds (or when finished).</p>
+                
+                <div class="passage-box">
+                    Raju has a small brown dog named Moti. Moti loves to run in the green park near their house. Every evening, Raju and Moti play with a bright red ball. When Raju throws the ball, Moti runs fast to fetch it and brings it back.
+                </div>
+
+                <div class="grid-2">
+                    <div>
+                        <div class="timer-box" id="timerDisplay">01:00</div>
+                        <button class="btn" style="background-color: var(--success);" onclick="startTimer()">Start 1-Min Timer</button>
+                        <button class="btn" style="background-color: var(--danger);" onclick="stopTimer()">Stop / Reset</button>
+                    </div>
+                    <div>
+                        <label for="totalWords">Total Words Read:</label>
+                        <input type="number" id="totalWords" value="45" placeholder="e.g. 45">
+
+                        <label for="errors">Number of Errors:</label>
+                        <input type="number" id="errors" value="3" placeholder="e.g. 3">
+
+                        <button class="btn" onclick="calculateFluency()">Calculate WCPM</button>
+                    </div>
+                </div>
+
+                <div id="fluencyResult" class="result-box" style="display:none;">
+                    <h3>Assessment Results</h3>
+                    <p id="wcpmOutput"></p>
+                    <p id="accuracyOutput"></p>
+                    <p id="benchmarkOutput"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: COMPREHENSION TEST -->
+        <div id="comprehension" class="tab-content">
+            <div class="card">
+                <h2>Class 3 Reading Comprehension Assessment</h2>
+                <div class="passage-box">
+                    Meena went to the school garden. She saw a colorful butterfly sitting on a yellow flower. The butterfly had blue and orange wings. Meena did not catch the butterfly because she wanted it to fly freely.
+                </div>
+
+                <form id="compForm">
+                    <p><strong>1. Where did Meena go?</strong></p>
+                    <input type="radio" name="q1" value="correct"> To the school garden<br>
+                    <input type="radio" name="q1" value="incorrect"> To the market<br>
+
+                    <p><strong>2. What was sitting on the yellow flower?</strong></p>
+                    <input type="radio" name="q2" value="incorrect"> A bird<br>
+                    <input type="radio" name="q2" value="correct"> A colorful butterfly<br>
+
+                    <p><strong>3. What colors were on the butterfly's wings?</strong></p>
+                    <input type="radio" name="q3" value="correct"> Blue and orange<br>
+                    <input type="radio" name="q3" value="incorrect"> Red and green<br>
+
+                    <p><strong>4. Why didn't Meena catch the butterfly?</strong></p>
+                    <input type="radio" name="q4" value="correct"> She wanted it to fly freely<br>
+                    <input type="radio" name="q4" value="incorrect"> She was scared of it<br>
+
+                    <button type="button" class="btn" onclick="scoreComprehension()">Submit Assessment</button>
+                </form>
+
+                <div id="compResult" class="result-box" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- TAB 4: MATH SKILLS -->
+        <div id="math" class="tab-content">
+            <div class="card">
+                <h2>Class 3 Math Skills Data Collection (NIPUN Bharat Aligned)</h2>
+                <p>Assess student mastery on 2-digit/3-digit addition with regrouping and basic multiplication facts.</p>
+
+                <div class="grid-2">
+                    <div>
+                        <h3>Task Probe Sheet</h3>
+                        <p>1. 34 + 28 = ___</p>
+                        <p>2. 56 + 19 = ___</p>
+                        <p>3. 42 - 15 = ___</p>
+                        <p>4. 3 × 4 = ___</p>
+                        <p>5. 5 × 2 = ___</p>
+                    </div>
+                    <div>
+                        <label for="mathAttempted">Problems Attempted:</label>
+                        <input type="number" id="mathAttempted" value="5">
+
+                        <label for="mathCorrect">Problems Correct:</label>
+                        <input type="number" id="mathCorrect" value="3">
+
+                        <button class="btn" onclick="calculateMathScore()">Record Data</button>
+                    </div>
+                </div>
+
+                <div id="mathResult" class="result-box" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- TAB 5: PROGRESS TRACKER -->
+        <div id="tracker" class="tab-content">
+            <div class="card">
+                <h2>Progress Monitoring Visual Dashboard</h2>
+                <p>Below is a visual representation of the student's Oral Reading Fluency (WCPM) tracked over an 8-week monitoring period against the IEP Target Goal.</p>
+                <div>
+                    <canvas id="progressChart" style="max-height: 400px;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 6: RE-EVALUATION -->
+        <div id="reeval" class="tab-content">
+            <div class="card">
+                <h2>Re-evaluation & Triennial Review Framework (RPWD Act 2016 Guidelines)</h2>
+                <p>Re-evaluations must be conducted at least once every 3 years, or when significant changes in student performance occur.</p>
+                
+                <h3>Key Re-evaluation Decision Flow</h3>
+                <ol>
+                    <li><strong>Review Existing Data:</strong> Analyze weekly progress monitoring trends, work samples, and teacher logs.</li>
+                    <li><strong>Identify Needed Additional Data:</strong> Determine if standardized testing (e.g., SLD diagnosis review) or multi-disciplinary assessments (OT, SLP) are required.</li>
+                    <li><strong>Determine Eligibility & Services:</strong> Does the student continue to meet criteria under RPWD Act categories? Are accommodations/modifications sufficient?</li>
+                    <li><strong>Update IEP Goals:</strong> Revise SMART goals based on baseline data collected during re-evaluation.</li>
+                </ol>
+
+                <h3>Checklist for Re-evaluation Readiness</h3>
+                <ul>
+                    <li><input type="checkbox"> Minimum 8–12 data points collected per IEP goal.</li>
+                    <li><input type="checkbox"> Multi-tiered intervention logs reviewed.</li>
+                    <li><input type="checkbox"> General Education teacher feedback documented.</li>
+                    <li><input type="checkbox"> Parent input and observation form completed.</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Navigation Logic
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('nav button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+
+            if(tabId === 'tracker') {
+                renderChart();
+            }
+        }
+
+        // Timer Logic
+        let timer;
+        let timeLeft = 60;
+        function startTimer() {
+            clearInterval(timer);
+            timeLeft = 60;
+            document.getElementById('timerDisplay').innerText = "01:00";
+            timer = setInterval(() => {
+                timeLeft--;
+                let sec = timeLeft < 10 ? "0" + timeLeft : timeLeft;
+                document.getElementById('timerDisplay').innerText = `00:${sec}`;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    alert("Time's up! Count total words read.");
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timer);
+            document.getElementById('timerDisplay').innerText = "01:00";
+        }
+
+        // Calculation Logics
+        function calculateFluency() {
+            const total = parseInt(document.getElementById('totalWords').value) || 0;
+            const errors = parseInt(document.getElementById('errors').value) || 0;
+            const wcpm = total - errors;
+            const accuracy = total > 0 ? ((wcpm / total) * 100).toFixed(1) : 0;
+
+            document.getElementById('fluencyResult').style.display = 'block';
+            document.getElementById('wcpmOutput').innerHTML = `<strong>Words Correct Per Minute (WCPM):</strong> ${wcpm}`;
+            document.getElementById('accuracyOutput').innerHTML = `<strong>Accuracy:</strong> ${accuracy}%`;
+
+            let benchmarkText = "";
+            if (wcpm >= 50) {
+                benchmarkText = "<span style='color:green; font-weight:bold;'>On Track:</span> Student meets or exceeds Class 3 benchmark (50+ WCPM).";
+            } else if (wcpm >= 30) {
+                benchmarkText = "<span style='color:orange; font-weight:bold;'>Needs Support:</span> Below benchmark. Recommend phonics and guided oral reading intervention.";
+            } else {
+                benchmarkText = "<span style='color:red; font-weight:bold;'>Intensive Support Required:</span> Significantly below Class 3 baseline. Consider multisensory reading instruction.";
+            }
+            document.getElementById('benchmarkOutput').innerHTML = benchmarkText;
+        }
+
+        function scoreComprehension() {
+            const form = document.getElementById('compForm');
+            let score = 0;
+            const total = 4;
+            
+            for(let i = 1; i <= total; i++) {
+                const q = form.elements['q' + i];
+                if (q && q.value === 'correct') score++;
+            }
+
+            const pct = (score / total) * 100;
+            const resultBox = document.getElementById('compResult');
+            resultBox.style.display = 'block';
+            resultBox.innerHTML = `<h3>Score: ${score}/${total} (${pct}%)</h3>` + 
+                (pct >= 75 ? "<p style='color:green;'><strong>Mastery Achieved:</strong> Student demonstrates good understanding of Class 3 texts.</p>" 
+                           : "<p style='color:red;'><strong>Goal Unmet:</strong> Student needs direct instruction in finding key details and inferencing.</p>");
+        }
+
+        function calculateMathScore() {
+            const att = parseInt(document.getElementById('mathAttempted').value) || 0;
+            const corr = parseInt(document.getElementById('mathCorrect').value) || 0;
+            const pct = att > 0 ? ((corr / att) * 100).toFixed(1) : 0;
+
+            const res = document.getElementById('mathResult');
+            res.style.display = 'block';
+            res.innerHTML = `<h3>Accuracy: ${pct}% (${corr} out of ${att} correct)</h3>` +
+                (pct >= 80 ? "<p style='color:green;'>Goal Met: High accuracy demonstrated.</p>" 
+                           : "<p style='color:orange;'>Intervention Needed: Provide concrete manipulatives and step-by-step prompts.</p>");
+        }
+
+        // Chart Rendering
+        let chartInstance = null;
+        function renderChart() {
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            if (chartInstance) chartInstance.destroy();
+
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
+                    datasets: [
+                        {
+                            label: 'Student WCPM Performance',
+                            data: [22, 25, 24, 28, 32, 35, 38, 42],
+                            borderColor: '#0284c7',
+                            backgroundColor: 'rgba(2, 132, 199, 0.1)',
+                            fill: true,
+                            tension: 0.2
+                        },
+                        {
+                            label: 'IEP Target Goal (50 WCPM)',
+                            data: [50, 50, 50, 50, 50, 50, 50, 50],
+                            borderColor: '#dc2626',
+                            borderDash: [5, 5],
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Words Correct Per Minute (WCPM)' }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

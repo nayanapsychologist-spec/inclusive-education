@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Behavior Intervention & Reinforcement Mastery Module</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        navy: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Top Navigation & Gamification Bar (Octalysis Core Drive 2: Accomplishment, Core Drive 4: Ownership) -->
+    <header class="bg-navy-900 text-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-brand-500 text-slate-900 font-black p-2 rounded-lg text-lg tracking-wider">
+                    BIP<span class="text-white font-normal">Lab</span>
+                </div>
+                <div>
+                    <h1 class="text-xs font-semibold sm:text-base leading-tight">Behavior Intervention & Token Systems Mastery</h1>
+                    <p class="text-[11px] text-slate-400 hidden sm:block">Classes 43 & 44 • Inclusive Learning Certificate</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <div class="bg-slate-800 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full flex items-center space-x-1.5 sm:space-x-2 border border-slate-700">
+                    <i class="fa-solid fa-trophy text-amber-400 text-xs"></i>
+                    <span class="text-xs font-bold text-slate-200" id="totalScore">XP: 0 / 1000</span>
+                </div>
+                <div class="bg-slate-800 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full flex items-center space-x-1.5 sm:space-x-2 border border-slate-700">
+                    <i class="fa-solid fa-layer-group text-emerald-400 text-xs"></i>
+                    <span class="text-xs font-bold text-slate-200" id="levelProgress">Progress: 0/5</span>
+                </div>
+                <button onclick="toggleCaseModal()" class="bg-brand-600 hover:bg-brand-500 text-white px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition">
+                    <i class="fa-solid fa-file-invoice"></i>
+                    <span class="hidden md:inline">Live Case File</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Navigation / Level Selector (Octalysis Core Drive 3: Empowerment & Progress) -->
+        <aside class="lg:col-span-3 space-y-4">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+                <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Module Levels</h2>
+                <nav class="space-y-1.5" id="levelNav">
+                    <!-- Nav items rendered dynamically -->
+                </nav>
+            </div>
+
+            <!-- Case Profile Quick Summary -->
+            <div class="bg-slate-900 text-white rounded-xl p-4 shadow-sm relative overflow-hidden">
+                <div class="absolute -right-4 -bottom-4 opacity-10 text-brand-500">
+                    <i class="fa-solid fa-user-graduate text-8xl"></i>
+                </div>
+                <div class="flex items-center space-x-2 text-xs font-semibold text-brand-400 uppercase tracking-wider mb-1">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <span>Target Learner Case</span>
+                </div>
+                <h3 class="text-lg font-bold text-white">Leo (Grade 4)</h3>
+                <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+                    Diagnosed with ADHD & dysgraphia. Frequently displays task avoidance (ripping worksheets, vocal refusals) during independent written math tasks.
+                </p>
+                <div class="mt-3 pt-3 border-t border-slate-800 flex justify-between items-center text-xs">
+                    <span class="text-slate-400">Target Behavior:</span>
+                    <span class="text-amber-400 font-medium">Task Avoidance</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Center Interactive Area -->
+        <main class="lg:col-span-9 space-y-6">
+            <!-- Active Level Banner -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6" id="levelHeader">
+                <!-- Level header injected here -->
+            </div>
+
+            <!-- Theory & University Content Section -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-4" id="levelTheory">
+                <!-- Theory injected here -->
+            </div>
+
+            <!-- Drill Practice Section -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6" id="levelDrill">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-pen-ruler text-brand-600"></i>
+                            Level Practice Drill & Case Integration
+                        </h3>
+                        <p class="text-xs text-slate-500">Answer all 5 questions to unlock case progression and update Leo's BIP file.</p>
+                    </div>
+                    <span class="text-xs font-bold bg-slate-100 text-slate-600 px-2.5 py-1 rounded-md" id="drillScoreBadge">
+                        Drill: 0/5
+                    </span>
+                </div>
+
+                <div id="quizContainer" class="space-y-6">
+                    <!-- Questions injected dynamically -->
+                </div>
+
+                <div id="drillFooter" class="mt-6 pt-4 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-3 hidden">
+                    <div class="text-xs text-emerald-700 font-semibold flex items-center gap-2" id="drillSuccessMsg">
+                        <i class="fa-solid fa-circle-check"></i> Level drill completed! Case file updated.
+                    </div>
+                    <button onclick="nextLevel()" id="nextLevelBtn" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition flex items-center justify-center gap-2 shadow-sm">
+                        <span>Proceed to Next Level</span> <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Live FBA & BIP Case Report Modal (Core Drive 4: Ownership / Cumulative Output) -->
+    <div id="caseModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-200">
+            <div class="bg-navy-900 text-white p-6 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-brand-500 text-slate-900 rounded-lg">
+                        <i class="fa-solid fa-clipboard-check text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold">Cumulative FBA Report & BIP Pre-Draft</h2>
+                        <p class="text-xs text-slate-400">Learner: Leo • Built incrementally through Level Practice Drills</p>
+                    </div>
+                </div>
+                <button onclick="toggleCaseModal()" class="text-slate-400 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-6 custom-scrollbar flex-1 bg-slate-50" id="modalReportContent">
+                <!-- Built live from state -->
+            </div>
+
+            <div class="p-4 bg-white border-t border-slate-200 flex justify-between items-center">
+                <span class="text-xs text-slate-500">Ready for team sign-off and BIP implementation.</span>
+                <div class="space-x-2">
+                    <button onclick="copyReportText()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg text-xs transition">
+                        <i class="fa-solid fa-copy mr-1"></i> Copy Text
+                    </button>
+                    <button onclick="toggleCaseModal()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-lg text-xs transition">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Script Logic -->
+    <script>
+        // State Management
+        const state = {
+            currentLevel: 0,
+            xp: 0,
+            scores: [0, 0, 0, 0, 0],
+            completedLevels: [false, false, false, false, false],
+            caseReport: {
+                baseline: "Pending Level 0 completion...",
+                antecedents: "Pending Level 1 completion...",
+                hypothesizedFunction: "Pending Level 1 completion...",
+                replacementBehavior: "Pending Level 2 completion...",
+                reactiveProtocol: "Pending Level 2 completion...",
+                tokenSystem: "Pending Level 3 completion...",
+                fadingPlan: "Pending Level 4 completion..."
+            }
+        };
+
+        // Course Levels Structure
+        const levels = [
+            {
+                id: 0,
+                title: "Level 0: Foundational Concepts & Terminology",
+                subtitle: "Brushing up on core ABA & Positive Behavior Supports (PBS) definitions.",
+                theoryTitle: "Academic Foundation: Operational Definitions & ABC Contingencies",
+                theoryContent: `
+                    <p class="text-sm leading-relaxed text-slate-600">
+                        Before constructing a Behavior Intervention Plan (BIP), we must standardize our definitions using <strong>Applied Behavior Analysis (ABA)</strong> principles curated from top special education frameworks.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-4">
+                        <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 text-xs uppercase tracking-wide text-brand-700">1. Operational Definition</h4>
+                            <p class="text-xs text-slate-600 mt-1">Behavior must be <em>observable</em>, <em>measurable</em>, and <em>specific</em>. Dead Man's Test: If a dead man can do it (e.g., "being quiet"), it is NOT an operational behavior.</p>
+                        </div>
+                        <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 text-xs uppercase tracking-wide text-brand-700">2. Three-Term Contingency (ABC)</h4>
+                            <p class="text-xs text-slate-600 mt-1"><strong>Antecedent (A)</strong> triggers <strong>Behavior (B)</strong> which yields <strong>Consequence (C)</strong>. FBA seeks to alter A and C to change B.</p>
+                        </div>
+                        <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 text-xs uppercase tracking-wide text-brand-700">3. Setting Events</h4>
+                            <p class="text-xs text-slate-600 mt-1">Contextual factors (e.g., poor sleep, medication changes, hunger) that increase vulnerability to antecedent triggers.</p>
+                        </div>
+                    </div>
+                    <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded text-xs text-amber-900">
+                        <strong>Case Spotlight (Leo):</strong> Leo is a 4th grader with ADHD and dysgraphia. During independent math worksheets, he rips his paper and yells "This is stupid!". The teacher sends him to the hallway.
+                    </div>
+                `,
+                questions: [
+                    {
+                        q: "Which of the following describes an OPERATIONAL definition for Leo's behavior?",
+                        options: [
+                            "Leo gets aggressive and disrespectful during math class.",
+                            "Leo rips his math worksheet into pieces and vocalizes above normal conversational volume.",
+                            "Leo demonstrates poor emotional control and lack of math motivation.",
+                            "Leo refuses to process executive function tasks in class."
+                        ],
+                        correct: 1,
+                        rationale: "Option B is observable, measurable, and specific. Words like 'disrespectful' or 'poor control' are subjective states, not operational descriptions.",
+                        caseUpdateKey: "baseline",
+                        caseUpdateVal: "Leo rips his paper into pieces and vocalizes above normal conversational volume when presented with independent math worksheets."
+                    },
+                    {
+                        q: "In Leo's case, what is the 'Antecedent' (A) in the 3-term contingency?",
+                        options: [
+                            "Teacher sending him to the hallway.",
+                            "Presentation of the independent math worksheet.",
+                            "Leo's ADHD diagnosis.",
+                            "Leo ripping the paper."
+                        ],
+                        correct: 1,
+                        rationale: "The antecedent is the immediate environmental stimulus that precedes the behavior: presenting the worksheet.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "What is the Consequence (C) currently maintaining Leo's behavior?",
+                        options: [
+                            "Receiving extra math instruction.",
+                            "Escape from the math task via removal to the hallway.",
+                            "Attention from peers who laugh.",
+                            "Sensory satisfaction from paper tearing."
+                        ],
+                        correct: 1,
+                        rationale: "Being sent to the hallway removes the math worksheet, providing negative reinforcement via escape.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "If Leo had poor sleep the night prior, making him 3x more likely to tear his paper, poor sleep is classified as a:",
+                        options: [
+                            "Direct Antecedent",
+                            "Maintaining Consequence",
+                            "Setting Event / Establishing Operation",
+                            "Target Skill Deficit"
+                        ],
+                        correct: 2,
+                        rationale: "Setting events alter the potency of reinforcers and lower the threshold for antecedent triggers.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "According to PBS guidelines, what is the primary flaw of relying solely on reactive consequences (e.g., hall exile)?",
+                        options: [
+                            "It teaches no replacement skill and inadvertently reinforces the escape function.",
+                            "It takes too long for the teacher to execute.",
+                            "It violates IEP progress reporting thresholds.",
+                            "It requires a secondary functional assessment."
+                        ],
+                        correct: 0,
+                        rationale: "Exile reinforces escape (the student gets out of work) and fails to build alternative academic/coping behaviors.",
+                        caseUpdateKey: null
+                    }
+                ]
+            },
+            {
+                id: 1,
+                title: "Level 1: FBA Data Synthesis & Functional Analysis",
+                subtitle: "Determining the true behavioral function from ABC data patterns.",
+                theoryTitle: "Academic Foundation: Identifying Behavioral Function",
+                theoryContent: `
+                    <p class="text-sm leading-relaxed text-slate-600">
+                        All human behavior serves a function. In inclusive educational settings, behavior functions are grouped into 4 primary domains (EASS):
+                    </p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 my-4 text-center">
+                        <div class="bg-emerald-50 border border-emerald-200 p-2.5 rounded-lg">
+                            <span class="font-bold text-emerald-800 text-xs block">ESCAPE / AVOID</span>
+                            <span class="text-[11px] text-emerald-600">Task, person, or sensory overload</span>
+                        </div>
+                        <div class="bg-blue-50 border border-blue-200 p-2.5 rounded-lg">
+                            <span class="font-bold text-blue-800 text-xs block">ACCESS ATTENTION</span>
+                            <span class="text-[11px] text-blue-600">Peer or adult interaction</span>
+                        </div>
+                        <div class="bg-purple-50 border border-purple-200 p-2.5 rounded-lg">
+                            <span class="font-bold text-purple-800 text-xs block">ACCESS TANGIBLE</span>
+                            <span class="text-[11px] text-purple-600">Item, activity, or privilege</span>
+                        </div>
+                        <div class="bg-amber-50 border border-amber-200 p-2.5 rounded-lg">
+                            <span class="font-bold text-amber-800 text-xs block">AUTOMATIC / SENSORY</span>
+                            <span class="text-[11px] text-amber-600">Internal reinforcement</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-600">
+                        <strong>Data Diagnostic Rule:</strong> Look at the <em>consequence that consistently follows the behavior</em> across multiple ABC observations. If the student consistently avoids writing tasks when tearing paper, the primary function is <strong>Escape from Writing Demands</strong>.
+                    </p>
+                `,
+                questions: [
+                    {
+                        q: "Analysis of 10 ABC data entries for Leo shows paper tearing occurs exclusively during writing-heavy tasks (Math & Language Arts) and ends with hall time. What is the primary function?",
+                        options: [
+                            "Attention seeking from peers",
+                            "Escape/Avoidance of written demands",
+                            "Access to tangible rewards",
+                            "Automatic sensory satisfaction"
+                        ],
+                        correct: 1,
+                        rationale: "The consistent outcome across subjects is removal from written tasks, indicating an Escape function.",
+                        caseUpdateKey: "hypothesizedFunction",
+                        caseUpdateVal: "Escape / Avoidance of fine-motor heavy written tasks (compounded by dysgraphia)."
+                    },
+                    {
+                        q: "Leo's dysgraphia makes writing physically painful and taxing. In function-based intervention, his dysgraphia acts as a:",
+                        options: [
+                            "Skill deficit compounding the task difficulty (Antecedent trigger enhancer)",
+                            "Punishment contingency",
+                            "Secondary behavior goal",
+                            "Automatic reinforcer"
+                        ],
+                        correct: 0,
+                        rationale: "Physical discomfort from dysgraphia increases the value of escaping writing tasks.",
+                        caseUpdateKey: "antecedents",
+                        caseUpdateVal: "Triggers: Presentation of >5 written math problems on standard paper. Setting Factor: Fine-motor fatigue from dysgraphia."
+                    },
+                    {
+                        q: "Which antecedent modification directly addresses Leo's specific function and trigger?",
+                        options: [
+                            "Giving Leo a gold star whenever he sits quietly.",
+                            "Reducing written strain using speech-to-text or structured graphic organizers.",
+                            "Moving Leo to the front row during instructions.",
+                            "Loss of recess time when paper is torn."
+                        ],
+                        correct: 1,
+                        rationale: "Proactive antecedent modifications alter the demand characteristic (reducing writing load/fatigue).",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "Why would giving Leo peer attention praise fail as an effective intervention for his paper tearing?",
+                        options: [
+                            "Attention is not the maintaining function of his behavior.",
+                            "Leo dislikes all peers.",
+                            "Attention is a negative reinforcer.",
+                            "Teachers should never praise 4th graders."
+                        ],
+                        correct: 0,
+                        rationale: "Interventions must match the function. If the function is Escape, providing Attention does not solve the motivation underlying the behavior.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "What is the primary objective of a Functionally Equivalent Replacement Behavior (FERB)?",
+                        options: [
+                            "To make the student sit perfectly still for 45 minutes.",
+                            "To give the student an adaptive way to get the SAME function (e.g., asking for a break) without disruption.",
+                            "To eliminate the student's desire for breaks.",
+                            "To replace math with drawing activities."
+                        ],
+                        correct: 1,
+                        rationale: "A FERB must meet the same function (Escape) in a socially acceptable way (e.g., requesting a break card).",
+                        caseUpdateKey: null
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "Level 2: Crafting the BIP (Proactive & FERB Strategy)",
+                subtitle: "Building proactive antecedent modifications and replacement behaviors.",
+                theoryTitle: "Academic Foundation: Functionally Equivalent Replacement Behaviors (FERBs)",
+                theoryContent: `
+                    <p class="text-sm leading-relaxed text-slate-600">
+                        A legally sound BIP requires three core operational axes:
+                    </p>
+                    <div class="space-y-2 my-4 text-xs">
+                        <div class="p-3 bg-blue-50 rounded-lg border border-blue-200">
+                            <strong class="text-blue-900">1. Proactive Antecedent Supports:</strong> Alter environment so problem behavior is unnecessary (e.g., chunking assignments, assistive technology).
+                        </div>
+                        <div class="p-3 bg-emerald-50 rounded-lg border border-emerald-200">
+                            <strong class="text-emerald-900">2. FERB Training (Teaching Alternative Skill):</strong> The replacement behavior must require <em>less efficiency/effort</em> than paper tearing to request a break or support.
+                        </div>
+                        <div class="p-3 bg-rose-50 rounded-lg border border-rose-200">
+                            <strong class="text-rose-900">3. Consequence/Response Protocols:</strong> Ensure target behavior NO LONGER yields reinforcement (Extinction) while FERB is instantly reinforced.
+                        </div>
+                    </div>
+                `,
+                questions: [
+                    {
+                        q: "Which FERB is most appropriate for Leo's escape-motivated paper tearing during math?",
+                        options: [
+                            "Teaching Leo to hand the teacher a '2-Minute Break/Assist' break card before reaching frustration.",
+                            "Telling Leo to count to 10 silently when angry.",
+                            "Requiring Leo to finish all math problems before leaving his desk.",
+                            "Giving Leo a stress ball to squeeze."
+                        ],
+                        correct: 0,
+                        rationale: "Handing a break card serves the exact function (escape/break) adaptively and efficiently.",
+                        caseUpdateKey: "replacementBehavior",
+                        caseUpdateVal: "Leo will request a 2-minute break or speech-to-text assistive tool using a visual Help/Break card before ripping paper in 4 out of 5 opportunities."
+                    },
+                    {
+                        q: "To make the FERB successful, how fast must the teacher honor Leo's break card request in the acquisition phase?",
+                        options: [
+                            "At the end of the class period.",
+                            "Immediately (100% dense reinforcement schedule initially).",
+                            "After he completes 3 more problems.",
+                            "Only if he asks politely with eye contact."
+                        ],
+                        correct: 1,
+                        rationale: "For a new replacement skill to compete with a problematic behavior, it must yield the reinforcer instantly and reliably.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "How should the teacher respond if Leo tears his worksheet DESPITE having break cards on his desk?",
+                        options: [
+                            "Send him to the playground immediately.",
+                            "Neutral redirection to the break card; do NOT allow escape from work (minimize hall exile; complete reduced task upon calm).",
+                            "Engage in a 10-minute lecture on respecting school supplies.",
+                            "Give him a gold token."
+                        ],
+                        correct: 1,
+                        rationale: "This applies Extinction (preventing escape via problem behavior) while keeping emotional escalation low.",
+                        caseUpdateKey: "reactiveProtocol",
+                        caseUpdateVal: "Neutral, low-attention response. Prevent full escape; guide back to using the break card or chunked task once calm."
+                    },
+                    {
+                        q: "Which antecedent modification directly mitigates Leo's dysgraphia obstacle during math?",
+                        options: [
+                            "Providing a digital math interface (or scribe) and breaking 10-problem sheets into 2-problem strips.",
+                            "Telling Leo to write faster.",
+                            "Giving Leo colored pencils instead of regular pencils.",
+                            "Making Leo practice handwriting during lunch."
+                        ],
+                        correct: 0,
+                        rationale: "Task-chunking and digital tools reduce fine-motor fatigue, tackling the antecedent directly.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "In a BIP, why is it critical that reactive strategies are non-reinforcing?",
+                        options: [
+                            "If the reactive strategy accidentally delivers the function (e.g. escape), the problem behavior will persist.",
+                            "Because punishment is the main goal of a BIP.",
+                            "To make sure the IEP team gets administrative approval.",
+                            "Because students do not notice teacher reactions."
+                        ],
+                        correct: 0,
+                        rationale: "If inappropriate behavior continues to work (yield escape), the student will not switch to the replacement behavior.",
+                        caseUpdateKey: null
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Level 3: BIP Reinforcement Systems & Token Economies",
+                subtitle: "Designing systematic operant token systems and backup menus.",
+                theoryTitle: "Academic Foundation: Designing Token Economies (Class 44 Anchor)",
+                theoryContent: `
+                    <p class="text-sm leading-relaxed text-slate-600">
+                        A token economy uses <strong>generalized conditioned reinforcers</strong> (tokens, points, stars) that are exchanged for back-up reinforcers (privileges, tangibles).
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs space-y-1">
+                            <h4 class="font-bold text-slate-800">Key Design Rules</h4>
+                            <p>• Define 1-2 target behaviors clearly.</p>
+                            <p>• Establish dense initial token earning ratios (ensure success).</p>
+                            <p>• Create a dynamic menu of backup reinforcers.</p>
+                            <p>• <strong>Never</strong> allow a student to fall into "token debt" (avoid hyper-punitive response costs).</p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs space-y-1">
+                            <h4 class="font-bold text-slate-800">Backup Reinforcer Categories</h4>
+                            <p>• <strong>Privileges:</strong> Line leader, teacher helper, iPad time.</p>
+                            <p>• <strong>Choice/Escape:</strong> 5-minute break pass, homework pass.</p>
+                            <p>• <strong>Tangibles:</strong> Small fidgets, sticker charts.</p>
+                        </div>
+                    </div>
+                `,
+                questions: [
+                    {
+                        q: "For Leo, what target behavior earns tokens in his new Class 44 Reinforcement System?",
+                        options: [
+                            "Completing a math chunk or using his help card appropriately without paper tearing.",
+                            "Sitting completely motionless for 45 minutes.",
+                            "Scoring 100% on every math quiz.",
+                            "Helping the teacher organize the classroom."
+                        ],
+                        correct: 0,
+                        rationale: "Tokens reinforce the replacement behavior and task engagement in manageable increments.",
+                        caseUpdateKey: "tokenSystem",
+                        caseUpdateVal: "5-Token Grid System: Earns 1 token per completed math problem strip OR proper break card use. Tokens redeemed for 5 min drawing break or computer math game."
+                    },
+                    {
+                        q: "Why should Leo's initial token menu include '5 Minutes of Free Computer/Drawing Time'?",
+                        options: [
+                            "Because drawing is aligned with his escape/sensory preference, serving as a powerful backup reinforcer.",
+                            "Because drawing is required in 4th grade math standard.",
+                            "To make him forget about math entirely.",
+                            "Because drawing requires no teacher supervision."
+                        ],
+                        correct: 0,
+                        rationale: "Backup reinforcers must align with learner preference and functional motivators (break/choice).",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "What is the danger of taking away earned tokens when Leo tears paper ('Response Cost') early in the intervention?",
+                        options: [
+                            "It can bankrupt his tokens, leading to frustration, loss of system buy-in, and increased behavioral outbursts.",
+                            "It makes the teacher look too strict.",
+                            "Tokens cannot be legally taken away under any circumstances.",
+                            "It speeds up learning too quickly."
+                        ],
+                        correct: 0,
+                        rationale: "Demotivating token debt ruins token currency value. Focus on earning for positive behaviors first.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "What token delivery rate (schedule of reinforcement) should be used during Leo's first week?",
+                        options: [
+                            "Fixed Ratio 1 (FR1): Token delivered immediately after every problem strip/successful break card request.",
+                            "Variable Ratio 20: Token delivered randomly after ~20 problems.",
+                            "End of the week payout only.",
+                            "Fixed Interval 60: Token delivered once per hour."
+                        ],
+                        correct: 0,
+                        rationale: "Dense, continuous reinforcement (FR1) is essential when establishing new behaviors.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "Which element makes a token board accessible and visual for a student with ADHD like Leo?",
+                        options: [
+                            "A 5-slot visual velcro board attached to his desk with clear target icons.",
+                            "A complex spreadsheet maintained on the teacher's laptop.",
+                            "A verbal reminder given at the end of the day.",
+                            "A note sent home to parents weekly."
+                        ],
+                        correct: 0,
+                        rationale: "Immediate visual feedback on the student's desk maintains focus and motivation for learners with ADHD.",
+                        caseUpdateKey: null
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "Level 4: Fading, Generalization & Final Case Assembly",
+                subtitle: "Transitioning to natural reinforcers and finalizing the complete report.",
+                theoryTitle: "Academic Foundation: Generalization & Intrinsic Transition",
+                theoryContent: `
+                    <p class="text-sm leading-relaxed text-slate-600">
+                        Artificial token economies are temporary scaffolding. The ultimate goal of special education behavior intervention is <strong>generalization</strong> across settings and <strong>fading</strong> to natural contingencies.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 my-4 text-xs">
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <strong>1. System Systematic Fading:</strong> Increase tokens required for backup reinforcers; transition from continuous (FR1) to intermittent schedules.
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <strong>2. Pairing Social Praise:</strong> Always pair token delivery with specific verbal praise ("Great job using your break card!") to build intrinsic social reinforcement value.
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <strong>3. Generalization:</strong> Expand implementation from math class to language arts and social studies.
+                        </div>
+                    </div>
+                `,
+                questions: [
+                    {
+                        q: "When should the team begin fading Leo's artificial token economy?",
+                        options: [
+                            "When Leo consistently meets his target behavior criteria (e.g., 80%+ work completion with zero paper tearing) across 2 consecutive weeks.",
+                            "On day 2 of implementation.",
+                            "Never; token boards must remain forever.",
+                            "When the school year ends."
+                        ],
+                        correct: 0,
+                        rationale: "Fading begins only after the replacement behavior is firmly established and fluent.",
+                        caseUpdateKey: "fadingPlan",
+                        caseUpdateVal: "Phase 1: FR1 token per problem strip. Phase 2 (Week 3): Expand to 3 problems per token. Phase 3: Transition to self-monitoring checklist paired with natural teacher praise."
+                    },
+                    {
+                        q: "How should the teacher pair token delivery to build intrinsic motivation?",
+                        options: [
+                            "Silently drop the token on his desk.",
+                            "Pair token delivery with specific verbal praise specifying what skill Leo used.",
+                            "Tell the class that Leo is getting special treatment.",
+                            "Give the token only during recess."
+                        ],
+                        correct: 1,
+                        rationale: "Pairing secondary reinforcers with enthusiastic, specific praise transfers reinforcing value to natural social interactions.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "To ensure Leo generalizes his new replacement behavior (using break cards), what must occur?",
+                        options: [
+                            "Train all subject teachers (Language Arts, Science) and instructional aides on the same BIP protocol.",
+                            "Keep the break cards locked in the math teacher's drawer.",
+                            "Only allow break cards on Mondays.",
+                            "Expect Leo to teach his peers how to use break cards."
+                        ],
+                        correct: 0,
+                        rationale: "Generalization requires consistent cross-setting implementation and staff alignment.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "In IEP progress monitoring, how will the team track Leo's BIP success quantitatively?",
+                        options: [
+                            "By counting daily frequency of paper-tearing incidents and percentage of math strips completed.",
+                            "By asking the teacher if Leo seems 'happier'.",
+                            "By testing his IQ score every month.",
+                            "By counting how many tokens are left at school end."
+                        ],
+                        correct: 0,
+                        rationale: "IEP progress monitoring relies on direct frequency and percentage data of target/replacement behaviors.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "Your final case file for Leo now links FBA data -> Antecedent modifications -> FERB -> Token Reinforcement -> Fading. What is this integrated structure called?",
+                        options: [
+                            "A Comprehensive Function-Based Behavior Intervention Plan (BIP)",
+                            "A Manifestation Determination Review",
+                            "A Standardized Achievement Test",
+                            "A Psychoeducational Assessment"
+                        ],
+                        correct: 0,
+                        rationale: "This complete alignment across data, intervention, reinforcement, and fading constitutes a comprehensive BIP.",
+                        caseUpdateKey: null
+                    }
+                ]
+            }
+        ];
+
+        // Core App Initialization & Event Handlers
+        document.addEventListener('DOMContentLoaded', () => {
+            renderNav();
+            loadLevel(0);
+        });
+
+        function renderNav() {
+            const nav = document.getElementById('levelNav');
+            nav.innerHTML = levels.map((lvl, index) => {
+                const isCurrent = index === state.currentLevel;
+                const isCompleted = state.completedLevels[index];
+                
+                let statusIcon = '<i class="fa-regular fa-circle text-slate-300"></i>';
+                if (isCompleted) {
+                    statusIcon = '<i class="fa-solid fa-circle-check text-emerald-500"></i>';
+                } else if (isCurrent) {
+                    statusIcon = '<i class="fa-solid fa-spinner fa-spin text-brand-600"></i>';
+                }
+
+                return `
+                    <button onclick="switchLevel(${index})" 
+                        class="w-full text-left px-3 py-2.5 rounded-lg flex items-center justify-between transition text-xs font-medium
+                        ${isCurrent ? 'bg-brand-50 text-brand-800 border border-brand-200 font-semibold' : 'hover:bg-slate-100 text-slate-600'}">
+                        <div class="flex items-center space-x-2.5 truncate">
+                            ${statusIcon}
+                            <span class="truncate">${lvl.title.split(':')[0]}</span>
+                        </div>
+                        <span class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded ml-1">${state.scores[index]}/5</span>
+                    </button>
+                `;
+            }).join('');
+
+            // Update header score counters
+            document.getElementById('totalScore').innerText = `XP: ${state.xp} / 1000`;
+            const completedCount = state.completedLevels.filter(Boolean).length;
+            document.getElementById('levelProgress').innerText = `Progress: ${completedCount}/5`;
+        }
+
+        function loadLevel(levelIndex) {
+            state.currentLevel = levelIndex;
+            const lvl = levels[levelIndex];
+
+            // Render Header
+            document.getElementById('levelHeader').innerHTML = `
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-brand-600 bg-brand-50 px-2 py-0.5 rounded">
+                            ${lvl.title.split(':')[0]}
+                        </span>
+                        <h2 class="text-xl font-extrabold text-slate-900 mt-1">${lvl.title.split(':')[1] || lvl.title}</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">${lvl.subtitle}</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-slate-400">Level Reward:</span>
+                        <span class="text-xs font-bold text-amber-600 block"><i class="fa-solid fa-award"></i> +200 XP</span>
+                    </div>
+                </div>
+            `;
+
+            // Render Theory
+            document.getElementById('levelTheory').innerHTML = `
+                <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-graduation-cap text-brand-600"></i>
+                    ${lvl.theoryTitle}
+                </h3>
+                ${lvl.theoryContent}
+            `;
+
+            // Render Drill Questions
+            renderDrill(lvl);
+            renderNav();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderDrill(lvl) {
+            const container = document.getElementById('quizContainer');
+            document.getElementById('drillScoreBadge').innerText = `Drill: ${state.scores[lvl.id]}/5`;
+
+            container.innerHTML = lvl.questions.map((q, qIndex) => {
+                return `
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3" id="qContainer_${qIndex}">
+                        <div class="flex items-start justify-between gap-2">
+                            <span class="text-xs font-bold bg-slate-200 text-slate-700 px-2 py-0.5 rounded">
+                                Question ${qIndex + 1}
+                            </span>
+                            <span id="qFeedbackBadge_${qIndex}" class="text-xs font-semibold hidden"></span>
+                        </div>
+                        <p class="text-sm font-medium text-slate-800">${q.q}</p>
+                        
+                        <div class="space-y-2">
+                            ${q.options.map((opt, oIndex) => `
+                                <button onclick="handleAnswer(${lvl.id}, ${qIndex}, ${oIndex})" 
+                                    id="opt_${qIndex}_${oIndex}"
+                                    class="w-full text-left p-2.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs text-slate-700 transition flex items-center justify-between">
+                                    <span>${opt}</span>
+                                    <i class="fa-regular fa-circle text-slate-300" id="icon_${qIndex}_${oIndex}"></i>
+                                </button>
+                            `).join('')}
+                        </div>
+
+                        <div id="rationale_${qIndex}" class="p-3 bg-blue-50 border border-blue-200 rounded-lg text-xs text-blue-900 hidden">
+                            <strong>Pedagogical Rationale:</strong> ${q.rationale}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Check if drill complete
+            checkDrillCompletion(lvl.id);
+        }
+
+        function handleAnswer(lvlId, qIndex, selectedOpt) {
+            const q = levels[lvlId].questions[qIndex];
+            const container = document.getElementById(`qContainer_${qIndex}`);
+            
+            // Disable buttons for this question
+            const buttons = container.querySelectorAll('button');
+            buttons.forEach(btn => btn.disabled = true);
+
+            const selectedBtn = document.getElementById(`opt_${qIndex}_${selectedOpt}`);
+            const selectedIcon = document.getElementById(`icon_${qIndex}_${selectedOpt}`);
+            const rationale = document.getElementById(`rationale_${qIndex}`);
+            const feedbackBadge = document.getElementById(`qFeedbackBadge_${qIndex}`);
+
+            if (selectedOpt === q.correct) {
+                selectedBtn.classList.remove('bg-white', 'border-slate-200');
+                selectedBtn.classList.add('bg-emerald-50', 'border-emerald-500', 'text-emerald-900', 'font-semibold');
+                selectedIcon.className = "fa-solid fa-circle-check text-emerald-600";
+                
+                feedbackBadge.innerText = "Correct (+40 XP)";
+                feedbackBadge.className = "text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded block";
+                
+                // Score & XP updates
+                state.scores[lvlId] = Math.min(5, state.scores[lvlId] + 1);
+                state.xp += 40;
+
+                // Update Case File if applicable
+                if (q.caseUpdateKey) {
+                    state.caseReport[q.caseUpdateKey] = q.caseUpdateVal;
+                }
+            } else {
+                selectedBtn.classList.remove('bg-white', 'border-slate-200');
+                selectedBtn.classList.add('bg-rose-50', 'border-rose-500', 'text-rose-900');
+                selectedIcon.className = "fa-solid fa-circle-xmark text-rose-600";
+
+                // Highlight correct answer
+                const correctBtn = document.getElementById(`opt_${qIndex}_${q.correct}`);
+                const correctIcon = document.getElementById(`icon_${qIndex}_${q.correct}`);
+                correctBtn.classList.add('bg-emerald-50', 'border-emerald-400');
+                correctIcon.className = "fa-solid fa-circle-check text-emerald-600";
+
+                feedbackBadge.innerText = "Incorrect";
+                feedbackBadge.className = "text-xs font-semibold text-rose-600 bg-rose-50 px-2 py-0.5 rounded block";
+            }
+
+            rationale.classList.remove('hidden');
+            document.getElementById('drillScoreBadge').innerText = `Drill: ${state.scores[lvlId]}/5`;
+            document.getElementById('totalScore').innerText = `XP: ${state.xp} / 1000`;
+
+            checkDrillCompletion(lvlId);
+        }
+
+        function checkDrillCompletion(lvlId) {
+            const lvl = levels[lvlId];
+            const qContainers = document.querySelectorAll('[id^="qContainer_"]');
+            let answeredCount = 0;
+
+            qContainers.forEach(c => {
+                if (c.querySelector('button[disabled]')) answeredCount++;
+            });
+
+            if (answeredCount === lvl.questions.length) {
+                state.completedLevels[lvlId] = true;
+                const drillFooter = document.getElementById('drillFooter');
+                const nextBtn = document.getElementById('nextLevelBtn');
+
+                if (lvlId < levels.length - 1) {
+                    nextBtn.innerHTML = `<span>Proceed to Next Level</span> <i class="fa-solid fa-arrow-right"></i>`;
+                } else {
+                    nextBtn.innerHTML = `<span>Review Final Case Report</span> <i class="fa-solid fa-file-invoice"></i>`;
+                }
+
+                drillFooter.classList.remove('hidden');
+                renderNav();
+            }
+        }
+
+        function switchLevel(lvlIndex) {
+            loadLevel(lvlIndex);
+        }
+
+        function nextLevel() {
+            if (state.currentLevel < levels.length - 1) {
+                loadLevel(state.currentLevel + 1);
+            } else {
+                toggleCaseModal();
+            }
+        }
+
+        function toggleCaseModal() {
+            const modal = document.getElementById('caseModal');
+            const content = document.getElementById('modalReportContent');
+
+            content.innerHTML = `
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4 text-xs">
+                    <div class="border-b border-slate-200 pb-3 flex justify-between items-center">
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-900">STUDENT FUNCTIONAL BEHAVIOR ASSESSMENT & BIP CASE REPORT</h3>
+                            <p class="text-slate-500 text-[11px]">Special Education Inclusive Learning Batch • Case: Leo</p>
+                        </div>
+                        <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+                            Status: Ready for BIP Implementation
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 bg-slate-50 p-3 rounded-lg border border-slate-200">
+                        <div><strong>Student Name:</strong> Leo</div>
+                        <div><strong>Grade / Placement:</strong> Grade 4 / Inclusive Classroom</div>
+                        <div><strong>Primary Diagnosis:</strong> ADHD, Dysgraphia</div>
+                        <div><strong>Assessment Target:</strong> Math Worksheet Task Avoidance</div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 text-xs text-brand-700 uppercase">1. Operational Baseline Behavior Definition</h4>
+                            <p class="mt-1 text-slate-700 leading-relaxed">${state.caseReport.baseline}</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 text-xs text-brand-700 uppercase">2. Antecedent Triggers & Contextual Setting Events</h4>
+                            <p class="mt-1 text-slate-700 leading-relaxed">${state.caseReport.antecedents}</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 text-xs text-brand-700 uppercase">3. Hypothesized Behavior Function (FBA Data Synthesis)</h4>
+                            <p class="mt-1 text-slate-700 leading-relaxed">${state.caseReport.hypothesizedFunction}</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 text-xs text-brand-700 uppercase">4. Functionally Equivalent Replacement Behavior (FERB)</h4>
+                            <p class="mt-1 text-slate-700 leading-relaxed">${state.caseReport.replacementBehavior}</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 text-xs text-brand-700 uppercase">5. Reactive Extinction Protocol</h4>
+                            <p class="mt-1 text-slate-700 leading-relaxed">${state.caseReport.reactiveProtocol}</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 text-xs text-brand-700 uppercase">6. Class 44 Reinforcement & Token Economy Matrix</h4>
+                            <p class="mt-1 text-slate-700 leading-relaxed">${state.caseReport.tokenSystem}</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 text-xs text-brand-700 uppercase">7. Systematic Fading & Generalization Plan</h4>
+                            <p class="mt-1 text-slate-700 leading-relaxed">${state.caseReport.fadingPlan}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.toggle('hidden');
+        }
+
+        function copyReportText() {
+            const reportText = `
+SPECIAL EDUCATION FBA & BIP CASE REPORT
+Student: Leo (Grade 4)
+Diagnoses: ADHD, Dysgraphia
+
+1. OPERATIONAL DEFINITION:
+${state.caseReport.baseline}
+
+2. ANTECEDENTS & SETTING EVENTS:
+${state.caseReport.antecedents}
+
+3. HYPOTHESIZED FUNCTION:
+${state.caseReport.hypothesizedFunction}
+
+4. REPLACEMENT BEHAVIOR (FERB):
+${state.caseReport.replacementBehavior}
+
+5. REACTIVE PROTOCOL:
+${state.caseReport.reactiveProtocol}
+
+6. TOKEN ECONOMY SYSTEM:
+${state.caseReport.tokenSystem}
+
+7. FADING & GENERALIZATION:
+${state.caseReport.fadingPlan}
+            `;
+
+            const tempInput = document.createElement("textarea");
+            tempInput.value = reportText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            alert("Case report copied to clipboard!");
+        }
+    </script>
+</body>
+</html>

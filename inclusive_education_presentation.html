@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inclusive Education: Core Concepts & Philosophy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        accent: {
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .slide {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            transform: translateY(10px);
+        }
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Flip Card Effect */
+        .flip-card {
+            background-color: transparent;
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Glassmorphism utility */
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-800 font-sans antialiased h-screen flex flex-col justify-between overflow-hidden select-none">
+
+    <!-- Top Header & Navigation -->
+    <header class="bg-slate-800 border-b border-slate-700/80 text-white px-6 py-3 flex justify-between items-center z-20 shadow-md">
+        <div class="flex items-center space-x-3">
+            <span class="bg-gradient-to-r from-sky-400 to-indigo-500 text-white p-2 rounded-lg font-bold text-lg shadow">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </span>
+            <div>
+                <h1 class="font-bold text-lg tracking-tight leading-none text-slate-100">Inclusive Education</h1>
+                <p class="text-xs text-sky-400 font-medium mt-0.5">Foundations, Paradigms & Core Philosophy</p>
+            </div>
+        </div>
+
+        <!-- Center: Slide Number Indicator -->
+        <div class="hidden sm:flex items-center space-x-2 bg-slate-900/60 px-4 py-1.5 rounded-full border border-slate-700/60">
+            <span id="slide-current" class="text-sky-400 font-bold">1</span>
+            <span class="text-slate-500">/</span>
+            <span id="slide-total" class="text-slate-400">8</span>
+        </div>
+
+        <!-- Right Side: Utility Controls -->
+        <div class="flex items-center space-x-2">
+            <button id="btn-toc" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-700 hover:bg-slate-600 text-slate-200 transition flex items-center gap-1.5" title="Overview">
+                <i class="fa-solid fa-list-ul"></i> <span class="hidden md:inline">Index</span>
+            </button>
+            <button id="btn-fullscreen" class="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-700 transition" title="Toggle Fullscreen">
+                <i class="fa-solid fa-expand"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="w-full bg-slate-800 h-1.5 relative">
+        <div id="progress-bar" class="bg-gradient-to-r from-sky-400 to-indigo-500 h-full transition-all duration-300 w-0"></div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 relative overflow-y-auto overflow-x-hidden p-4 sm:p-6 lg:p-8 flex items-center justify-center bg-slate-950/90">
+        
+        <!-- Slide 1: Welcome & Introduction -->
+        <section class="slide active flex-col items-center justify-center w-full max-w-5xl mx-auto text-center my-auto">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-300 text-xs font-semibold mb-6 uppercase tracking-wider">
+                <i class="fa-solid fa-book-open"></i> Introduction to Inclusive Education
+            </div>
+            <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight mb-6 leading-tight">
+                Embracing Diversity in <br>
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-sky-400 via-indigo-300 to-purple-400">Every Classroom</span>
+            </h1>
+            <p class="text-lg sm:text-xl text-slate-300 max-w-3xl mb-10 leading-relaxed">
+                Welcome to your introductory course on Inclusive Education. Explore the shifts in educational paradigms, human rights foundations, and practical framework for every learner.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl text-left">
+                <div class="bg-slate-900/80 border border-slate-800 p-5 rounded-2xl shadow-lg hover:border-sky-500/50 transition">
+                    <div class="text-sky-400 text-2xl mb-3"><i class="fa-solid fa-circle-question"></i></div>
+                    <h3 class="font-bold text-white text-lg mb-1">1. Concept Definition</h3>
+                    <p class="text-slate-400 text-sm">Understanding what genuine inclusion means beyond just physical presence.</p>
+                </div>
+                <div class="bg-slate-900/80 border border-slate-800 p-5 rounded-2xl shadow-lg hover:border-sky-500/50 transition">
+                    <div class="text-purple-400 text-2xl mb-3"><i class="fa-solid fa-code-compare"></i></div>
+                    <h3 class="font-bold text-white text-lg mb-1">2. Key Comparisons</h3>
+                    <p class="text-slate-400 text-sm">Contrasting Exclusion, Segregation, Integration, and Inclusion.</p>
+                </div>
+                <div class="bg-slate-900/80 border border-slate-800 p-5 rounded-2xl shadow-lg hover:border-sky-500/50 transition">
+                    <div class="text-emerald-400 text-2xl mb-3"><i class="fa-solid fa-heart"></i></div>
+                    <h3 class="font-bold text-white text-lg mb-1">3. Core Philosophy</h3>
+                    <p class="text-slate-400 text-sm">Examining UDL, Equity, Social Model of Disability & Human Rights.</p>
+                </div>
+            </div>
+
+            <button onclick="nextSlide()" class="mt-10 px-8 py-3.5 bg-gradient-to-r from-sky-500 to-indigo-600 text-white rounded-xl font-bold shadow-lg shadow-sky-500/20 hover:scale-105 transition transform flex items-center gap-2">
+                Begin Presentation <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </section>
+
+        <!-- Slide 2: What is Inclusive Education? -->
+        <section class="slide flex-col justify-center w-full max-w-5xl mx-auto my-auto">
+            <div class="mb-6">
+                <span class="text-xs uppercase tracking-widest text-sky-400 font-bold">Module 01</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1">What is Inclusive Education?</h2>
+                <p class="text-slate-400 text-sm mt-1">A transformative approach to human rights and educational access.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                <!-- UNESCO Definition Card -->
+                <div class="lg:col-span-7 bg-gradient-to-br from-slate-900 to-slate-900/90 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4 text-sky-400">
+                            <i class="fa-solid fa-quote-left text-3xl opacity-50"></i>
+                            <span class="font-bold tracking-wider text-xs uppercase text-sky-400">UNESCO Definition</span>
+                        </div>
+                        <p class="text-slate-200 text-base sm:text-lg leading-relaxed italic mb-6">
+                            "Inclusive Education is a process of strengthening the capacity of the education system to reach out to all learners... It involves restructuring the culture, policies, and practices in schools so that they respond to the diversity of students."
+                        </p>
+                    </div>
+                    <div class="border-t border-slate-800 pt-4 flex items-center justify-between text-xs text-slate-400">
+                        <span>UNESCO Guidelines for Inclusion</span>
+                        <span class="text-sky-400 font-semibold">Transforming Systems, Not Students</span>
+                    </div>
+                </div>
+
+                <!-- 3 Pillars Cards -->
+                <div class="lg:col-span-5 flex flex-col justify-between gap-4">
+                    <div class="bg-slate-900 border-l-4 border-sky-500 p-4 rounded-r-xl shadow-md">
+                        <h4 class="font-bold text-white text-base flex items-center gap-2">
+                            <i class="fa-solid fa-users text-sky-400"></i> For ALL Learners
+                        </h4>
+                        <p class="text-slate-400 text-xs mt-1">Not just students with disabilities, but all marginalized groups regardless of ethnicity, gender, socio-economic background, or learning needs.</p>
+                    </div>
+
+                    <div class="bg-slate-900 border-l-4 border-indigo-500 p-4 rounded-r-xl shadow-md">
+                        <h4 class="font-bold text-white text-base flex items-center gap-2">
+                            <i class="fa-solid fa-sliders text-indigo-400"></i> System Adaptation
+                        </h4>
+                        <p class="text-slate-400 text-xs mt-1">The school changes its environment, pedagogy, and mindset to fit the child—rather than forcing the child to fit the rigid system.</p>
+                    </div>
+
+                    <div class="bg-slate-900 border-l-4 border-purple-500 p-4 rounded-r-xl shadow-md">
+                        <h4 class="font-bold text-white text-base flex items-center gap-2">
+                            <i class="fa-solid fa-hands-holding-child text-purple-400"></i> Active Belonging
+                        </h4>
+                        <p class="text-slate-400 text-xs mt-1">Focuses on presence, active participation, and genuine achievement, fostering a sense of shared community.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Visualizing the 4 Models -->
+        <section class="slide flex-col justify-center w-full max-w-5xl mx-auto my-auto">
+            <div class="mb-6 text-center">
+                <span class="text-xs uppercase tracking-widest text-sky-400 font-bold">Module 02: Conceptual Models</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1">Evolution of Educational Access</h2>
+                <p class="text-slate-400 text-sm">Click each model to explore how students with diverse needs are positioned in the education system.</p>
+            </div>
+
+            <!-- Interactive Model Selector -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <button onclick="selectModel('exclusion')" id="btn-model-exclusion" class="model-btn bg-slate-900 border-2 border-slate-800 hover:border-red-500 p-4 rounded-xl text-center transition group">
+                    <div class="w-10 h-10 mx-auto rounded-full bg-red-500/10 text-red-400 flex items-center justify-center text-lg mb-2 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-ban"></i>
+                    </div>
+                    <div class="font-bold text-white text-sm">Exclusion</div>
+                </button>
+
+                <button onclick="selectModel('segregation')" id="btn-model-segregation" class="model-btn bg-slate-900 border-2 border-slate-800 hover:border-amber-500 p-4 rounded-xl text-center transition group">
+                    <div class="w-10 h-10 mx-auto rounded-full bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg mb-2 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <div class="font-bold text-white text-sm">Segregation</div>
+                </button>
+
+                <button onclick="selectModel('integration')" id="btn-model-integration" class="model-btn bg-slate-900 border-2 border-slate-800 hover:border-blue-500 p-4 rounded-xl text-center transition group">
+                    <div class="w-10 h-10 mx-auto rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center text-lg mb-2 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-object-group"></i>
+                    </div>
+                    <div class="font-bold text-white text-sm">Integration</div>
+                </button>
+
+                <button onclick="selectModel('inclusion')" id="btn-model-inclusion" class="model-btn active-model bg-slate-900 border-2 border-emerald-500 p-4 rounded-xl text-center transition group shadow-lg shadow-emerald-500/10">
+                    <div class="w-10 h-10 mx-auto rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg mb-2 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-circle-nodes"></i>
+                    </div>
+                    <div class="font-bold text-emerald-400 text-sm">Inclusion</div>
+                </button>
+            </div>
+
+            <!-- Dynamic Model Info Box -->
+            <div id="model-display-box" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row gap-6 items-center">
+                <!-- SVG Diagram Graphic -->
+                <div class="w-48 h-48 flex-shrink-0 relative bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-center p-2" id="model-svg-container">
+                    <!-- SVG populated by JS -->
+                </div>
+                <div class="flex-1 text-left">
+                    <div class="inline-block px-2.5 py-1 rounded text-xs font-bold uppercase tracking-wider mb-2" id="model-badge"></div>
+                    <h3 class="text-2xl font-bold text-white mb-2" id="model-title"></h3>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-4" id="model-description"></p>
+                    <div class="bg-slate-950/60 p-3 rounded-lg border border-slate-800/80 text-xs text-slate-400 flex items-start gap-2">
+                        <i class="fa-solid fa-circle-info text-sky-400 mt-0.5"></i>
+                        <span id="model-takeaway"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Inclusive vs Integrated Matrix -->
+        <section class="slide flex-col justify-center w-full max-w-5xl mx-auto my-auto">
+            <div class="mb-4">
+                <span class="text-xs uppercase tracking-widest text-sky-400 font-bold">Module 02: Comparison</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1">Integrated vs. Inclusive Education</h2>
+                <p class="text-slate-400 text-xs sm:text-sm mt-1">Understanding the critical paradigm shift from assimilation to transformation.</p>
+            </div>
+
+            <!-- Responsive Comparison Table -->
+            <div class="overflow-hidden rounded-xl border border-slate-800 bg-slate-900 shadow-xl">
+                <div class="grid grid-cols-12 bg-slate-800/90 text-slate-200 text-xs sm:text-sm font-bold py-3 px-4 border-b border-slate-700">
+                    <div class="col-span-3 text-slate-400 uppercase tracking-wider">Dimension</div>
+                    <div class="col-span-4 text-amber-400 flex items-center gap-1.5"><i class="fa-solid fa-object-group"></i> Integrated Education</div>
+                    <div class="col-span-5 text-emerald-400 flex items-center gap-1.5"><i class="fa-solid fa-circle-nodes"></i> Inclusive Education</div>
+                </div>
+
+                <div class="divide-y divide-slate-800 text-xs sm:text-sm text-slate-300">
+                    <!-- Row 1 -->
+                    <div class="grid grid-cols-12 px-4 py-3 items-center hover:bg-slate-800/40 transition">
+                        <div class="col-span-3 font-semibold text-slate-200">Core Focus</div>
+                        <div class="col-span-4 text-slate-400 pr-2">Fitting the child into an existing system.</div>
+                        <div class="col-span-5 text-slate-200 font-medium">Adapting the system to welcome all children.</div>
+                    </div>
+                    <!-- Row 2 -->
+                    <div class="grid grid-cols-12 px-4 py-3 items-center hover:bg-slate-800/40 transition">
+                        <div class="col-span-3 font-semibold text-slate-200">Locus of Change</div>
+                        <div class="col-span-4 text-slate-400 pr-2">Child must adapt, remediate, or assimilate.</div>
+                        <div class="col-span-5 text-slate-200 font-medium">Curriculum, pedagogy, & environment adapt.</div>
+                    </div>
+                    <!-- Row 3 -->
+                    <div class="grid grid-cols-12 px-4 py-3 items-center hover:bg-slate-800/40 transition">
+                        <div class="col-span-3 font-semibold text-slate-200">Curriculum</div>
+                        <div class="col-span-4 text-slate-400 pr-2">Standard & rigid; child gets extra support to cope.</div>
+                        <div class="col-span-5 text-slate-200 font-medium">Flexible, multi-tier & universally designed (UDL).</div>
+                    </div>
+                    <!-- Row 4 -->
+                    <div class="grid grid-cols-12 px-4 py-3 items-center hover:bg-slate-800/40 transition">
+                        <div class="col-span-3 font-semibold text-slate-200">View of Difference</div>
+                        <div class="col-span-4 text-slate-400 pr-2">Seen as a deficit or problem to be fixed.</div>
+                        <div class="col-span-5 text-slate-200 font-medium">Celebrated as natural human diversity.</div>
+                    </div>
+                    <!-- Row 5 -->
+                    <div class="grid grid-cols-12 px-4 py-3 items-center hover:bg-slate-800/40 transition">
+                        <div class="col-span-3 font-semibold text-slate-200">Teacher Role</div>
+                        <div class="col-span-4 text-slate-400 pr-2">Specialist handles "special needs" separately.</div>
+                        <div class="col-span-5 text-slate-200 font-medium">Collaborative teaching; all educators share ownership.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Philosophy - Medical vs. Social Model -->
+        <section class="slide flex-col justify-center w-full max-w-5xl mx-auto my-auto">
+            <div class="mb-6">
+                <span class="text-xs uppercase tracking-widest text-sky-400 font-bold">Module 03: Core Philosophy</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1">Medical vs. Social Model of Disability</h2>
+                <p class="text-slate-400 text-sm mt-1">Click the cards to flip and explore the underlying philosophical shift.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 h-80 sm:h-96">
+                <!-- Medical Model Flip Card -->
+                <div class="flip-card cursor-pointer h-full" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <!-- Front -->
+                        <div class="flip-card-front bg-slate-900 border-2 border-red-500/40 p-6 flex flex-col justify-between items-center text-center shadow-xl">
+                            <div class="mt-4">
+                                <div class="w-16 h-16 rounded-full bg-red-500/10 text-red-400 flex items-center justify-center text-2xl mx-auto mb-4">
+                                    <i class="fa-solid fa-stethoscope"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white mb-2">The Medical Model</h3>
+                                <p class="text-red-400 text-xs font-semibold uppercase tracking-wider">Traditional Paradigm</p>
+                            </div>
+                            <p class="text-slate-400 text-sm max-w-xs">Presents disability as a personal, biological impairment residing inside the individual.</p>
+                            <div class="text-xs text-slate-500 flex items-center gap-1 mb-2">
+                                <i class="fa-solid fa-rotate"></i> Click to flip and view key characteristics
+                            </div>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back bg-slate-900 border-2 border-red-500 p-6 flex flex-col justify-between text-left shadow-xl">
+                            <div>
+                                <h3 class="text-xl font-bold text-red-400 mb-3 border-b border-slate-800 pb-2">Medical Model Features:</h3>
+                                <ul class="space-y-2 text-slate-300 text-xs sm:text-sm">
+                                    <li class="flex items-start gap-2"><i class="fa-solid fa-xmark text-red-400 mt-1"></i> Focuses on diagnosis, deficit, and what the child cannot do.</li>
+                                    <li class="flex items-start gap-2"><i class="fa-solid fa-xmark text-red-400 mt-1"></i> Goal: Fix, cure, or normalize the student.</li>
+                                    <li class="flex items-start gap-2"><i class="fa-solid fa-xmark text-red-400 mt-1"></i> Creates dependency on special treatments and isolated settings.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-red-500/10 text-red-300 p-3 rounded-lg text-xs">
+                                <strong>Takeaway:</strong> "The child is the problem."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Model Flip Card -->
+                <div class="flip-card cursor-pointer h-full" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <!-- Front -->
+                        <div class="flip-card-front bg-slate-900 border-2 border-emerald-500/40 p-6 flex flex-col justify-between items-center text-center shadow-xl">
+                            <div class="mt-4">
+                                <div class="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-2xl mx-auto mb-4">
+                                    <i class="fa-solid fa-hand-holding-heart"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white mb-2">The Social Model</h3>
+                                <p class="text-emerald-400 text-xs font-semibold uppercase tracking-wider">Inclusive Education Paradigm</p>
+                            </div>
+                            <p class="text-slate-400 text-sm max-w-xs">Disability is created by environmental, attitudinal, and institutional barriers.</p>
+                            <div class="text-xs text-slate-500 flex items-center gap-1 mb-2">
+                                <i class="fa-solid fa-rotate"></i> Click to flip and view key characteristics
+                            </div>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back bg-slate-900 border-2 border-emerald-500 p-6 flex flex-col justify-between text-left shadow-xl">
+                            <div>
+                                <h3 class="text-xl font-bold text-emerald-400 mb-3 border-b border-slate-800 pb-2">Social Model Features:</h3>
+                                <ul class="space-y-2 text-slate-300 text-xs sm:text-sm">
+                                    <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> Distinguishes between <em>impairment</em> (biological) and <em>disability</em> (social barrier).</li>
+                                    <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> Goal: Identify and dismantle societal & educational barriers.</li>
+                                    <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> Empowers students by designing accessible environments.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-emerald-500/10 text-emerald-300 p-3 rounded-lg text-xs">
+                                <strong>Takeaway:</strong> "The system's barriers are the problem."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Equity vs. Equality & UDL -->
+        <section class="slide flex-col justify-center w-full max-w-5xl mx-auto my-auto">
+            <div class="mb-6">
+                <span class="text-xs uppercase tracking-widest text-sky-400 font-bold">Module 03: Core Pillars</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1">Equity & Universal Design (UDL)</h2>
+                <p class="text-slate-400 text-sm mt-1">Key philosophical tenets driving effective inclusive practice.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Equity vs Equality -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="p-2.5 rounded-xl bg-indigo-500/20 text-indigo-400"><i class="fa-solid fa-scale-balanced text-xl"></i></span>
+                            <h3 class="text-xl font-bold text-white">Equity vs. Equality</h3>
+                        </div>
+                        <div class="space-y-4 text-xs sm:text-sm">
+                            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/80">
+                                <h4 class="font-bold text-slate-300 mb-1">Equality = Same Input</h4>
+                                <p class="text-slate-400">Giving everyone the exact same resources regardless of starting position or unique needs.</p>
+                            </div>
+                            <div class="bg-indigo-950/40 border border-indigo-800/50 p-4 rounded-xl">
+                                <h4 class="font-bold text-indigo-300 mb-1">Equity = Right Input for Equal Opportunity</h4>
+                                <p class="text-slate-300">Providing differentiated resources, scaffolding, and tools so every child achieves successful outcomes.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-indigo-400 font-semibold mt-4">Inclusion prioritizes Equity over mere Equality.</p>
+                </div>
+
+                <!-- Universal Design for Learning (UDL) -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="p-2.5 rounded-xl bg-purple-500/20 text-purple-400"><i class="fa-solid fa-cubes text-xl"></i></span>
+                            <h3 class="text-xl font-bold text-white">Universal Design for Learning</h3>
+                        </div>
+                        <p class="text-slate-300 text-xs sm:text-sm mb-4">Designing learning experiences from the start to accommodate diverse learning styles and needs without retrofitting.</p>
+                        
+                        <!-- 3 UDL Pillars -->
+                        <div class="space-y-2 text-xs">
+                            <div class="flex items-center gap-3 bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                                <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+                                <span class="text-slate-200 font-bold w-24">Representation:</span>
+                                <span class="text-slate-400">Multiple ways of presenting content.</span>
+                            </div>
+                            <div class="flex items-center gap-3 bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                                <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+                                <span class="text-slate-200 font-bold w-24">Expression:</span>
+                                <span class="text-slate-400">Multiple ways for students to show knowledge.</span>
+                            </div>
+                            <div class="flex items-center gap-3 bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                <span class="text-slate-200 font-bold w-24">Engagement:</span>
+                                <span class="text-slate-400">Multiple ways to spark interest and motivation.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-purple-400 font-semibold mt-4">UDL creates accessible pathways for all learners proactive!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: Interactive Knowledge Check -->
+        <section class="slide flex-col justify-center w-full max-w-4xl mx-auto my-auto">
+            <div class="mb-4 text-center">
+                <span class="text-xs uppercase tracking-widest text-sky-400 font-bold">Self Assessment</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1">Knowledge Check</h2>
+                <p class="text-slate-400 text-xs sm:text-sm">Test your understanding of the core concepts covered today.</p>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl">
+                <!-- Question Tracker -->
+                <div class="flex justify-between items-center mb-6 text-xs text-slate-400 border-b border-slate-800 pb-3">
+                    <span id="quiz-question-num">Question 1 of 3</span>
+                    <span id="quiz-score" class="font-bold text-sky-400">Score: 0</span>
+                </div>
+
+                <!-- Dynamic Question Content -->
+                <div id="quiz-container">
+                    <h3 id="quiz-question" class="text-lg sm:text-xl font-bold text-white mb-6"></h3>
+                    <div id="quiz-options" class="space-y-3 mb-6"></div>
+                    <div id="quiz-feedback" class="hidden p-4 rounded-xl text-sm font-medium mb-4"></div>
+                </div>
+
+                <div class="flex justify-end">
+                    <button id="btn-quiz-next" onclick="nextQuizQuestion()" class="hidden px-6 py-2.5 bg-sky-500 hover:bg-sky-600 text-white rounded-lg text-sm font-bold transition flex items-center gap-2">
+                        Next Question <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: Summary & Key Takeaways -->
+        <section class="slide flex-col justify-center w-full max-w-5xl mx-auto my-auto text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-4 uppercase tracking-wider">
+                <i class="fa-solid fa-flag-checkered"></i> Summary & Next Steps
+            </div>
+            <h2 class="text-3xl sm:text-5xl font-extrabold text-white mb-6">Key Takeaways for Educators</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left mb-8">
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                    <div class="text-sky-400 text-2xl mb-2"><i class="fa-solid fa-arrows-rotate"></i></div>
+                    <h3 class="font-bold text-white text-lg mb-2">Shift the System</h3>
+                    <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Inclusion is not about assimilating a child into a rigid setup—it requires evolving the school's culture, policies, and practices.</p>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                    <div class="text-indigo-400 text-2xl mb-2"><i class="fa-solid fa-bridge"></i></div>
+                    <h3 class="font-bold text-white text-lg mb-2">Remove Barriers</h3>
+                    <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Guided by the Social Model, focus on removing environmental, instructional, and attitudinal obstacles to learning.</p>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                    <div class="text-purple-400 text-2xl mb-2"><i class="fa-solid fa-shapes"></i></div>
+                    <h3 class="font-bold text-white text-lg mb-2">Design Proactively</h3>
+                    <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Utilize Universal Design for Learning (UDL) to build flexibility into instruction from day one for every learner.</p>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-sky-900/40 to-indigo-900/40 border border-sky-500/30 p-6 rounded-2xl max-w-2xl mx-auto">
+                <p class="text-slate-200 text-sm italic">
+                    "Inclusion is not a strategy to help people fit into the systems and structures which exist in our societies; it is about transforming those systems and structures to make it better for everyone."
+                </p>
+                <span class="block text-sky-400 font-bold text-xs mt-2">— Dianne L. Ferguson</span>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Table of Contents Modal -->
+    <div id="modal-toc" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-2xl p-6 shadow-2xl">
+            <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-list-ul text-sky-400"></i> Slide Index
+                </h3>
+                <button onclick="toggleTOC()" class="text-slate-400 hover:text-white p-1">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="space-y-2 text-sm max-h-80 overflow-y-auto pr-1" id="toc-list">
+                <!-- Javascript populated TOC links -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Slide Controls Footer -->
+    <footer class="bg-slate-900 border-t border-slate-800 px-6 py-3 flex justify-between items-center z-20">
+        <button id="btn-prev" onclick="prevSlide()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-semibold rounded-lg transition flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed">
+            <i class="fa-solid fa-chevron-left"></i> Previous
+        </button>
+
+        <div class="text-xs text-slate-500 hidden sm:block">
+            Use <kbd class="px-1.5 py-0.5 bg-slate-800 text-slate-300 rounded border border-slate-700">←</kbd> <kbd class="px-1.5 py-0.5 bg-slate-800 text-slate-300 rounded border border-slate-700">→</kbd> or <kbd class="px-1.5 py-0.5 bg-slate-800 text-slate-300 rounded border border-slate-700">Space</kbd> to navigate
+        </div>
+
+        <button id="btn-next" onclick="nextSlide()" class="px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-semibold rounded-lg transition flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed shadow-md shadow-sky-600/20">
+            Next <i class="fa-solid fa-chevron-right"></i>
+        </button>
+    </footer>
+
+    <script>
+        // State Management
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        // Models Data for Slide 3
+        const modelsData = {
+            exclusion: {
+                title: "Exclusion",
+                badge: "Complete Denial",
+                badgeClass: "bg-red-500/20 text-red-400 border border-red-500/30",
+                description: "Students with disabilities or specific learning needs are directly or indirectly prevented from accessing education entirely. They are completely outside the school system.",
+                takeaway: "Exclusion denies the basic human right to education.",
+                svg: `
+                    <svg viewBox="0 0 200 200" class="w-full h-full">
+                        <circle cx="90" cy="100" r="65" fill="none" stroke="#334155" stroke-width="3" stroke-dasharray="4 4" />
+                        <text x="90" y="105" text-anchor="middle" fill="#64748b" font-size="12" font-weight="bold">Regular System</text>
+                        <circle cx="80" cy="80" r="6" fill="#38bdf8" />
+                        <circle cx="110" cy="85" r="6" fill="#38bdf8" />
+                        <circle cx="95" cy="120" r="6" fill="#38bdf8" />
+                        <circle cx="70" cy="115" r="6" fill="#38bdf8" />
+                        <!-- Excluded dots outside -->
+                        <circle cx="175" cy="50" r="6" fill="#f87171" />
+                        <circle cx="180" cy="100" r="6" fill="#f87171" />
+                        <circle cx="170" cy="150" r="6" fill="#f87171" />
+                    </svg>
+                `
+            },
+            segregation: {
+                title: "Segregation",
+                badge: "Separate Provision",
+                badgeClass: "bg-amber-500/20 text-amber-400 border border-amber-500/30",
+                description: "Education for students with disabilities is provided in separate environments (special schools or isolated classes) specifically designed to respond to their impairment, separate from mainstream peers.",
+                takeaway: "Segregation isolates learners and reinforces social barriers.",
+                svg: `
+                    <svg viewBox="0 0 200 200" class="w-full h-full">
+                        <circle cx="70" cy="100" r="50" fill="none" stroke="#334155" stroke-width="3" />
+                        <text x="70" y="104" text-anchor="middle" fill="#64748b" font-size="10" font-weight="bold">Mainstream</text>
+                        <circle cx="60" cy="85" r="5" fill="#38bdf8" />
+                        <circle cx="80" cy="90" r="5" fill="#38bdf8" />
+                        <circle cx="70" cy="115" r="5" fill="#38bdf8" />
+                        
+                        <!-- Separate Special Circle -->
+                        <circle cx="150" cy="100" r="30" fill="none" stroke="#f59e0b" stroke-width="3" />
+                        <text x="150" y="103" text-anchor="middle" fill="#f59e0b" font-size="8" font-weight="bold">Special</text>
+                        <circle cx="143" cy="92" r="5" fill="#f59e0b" />
+                        <circle cx="157" cy="92" r="5" fill="#f59e0b" />
+                        <circle cx="150" cy="112" r="5" fill="#f59e0b" />
+                    </svg>
+                `
+            },
+            integration: {
+                title: "Integration",
+                badge: "Assimilation Model",
+                badgeClass: "bg-blue-500/20 text-blue-400 border border-blue-500/30",
+                description: "Students with disabilities are placed in mainstream schools, but must adapt to the existing unadjusted environment, curriculum, and standardized expectations.",
+                takeaway: "Integration places the burden on the child to 'fit in'.",
+                svg: `
+                    <svg viewBox="0 0 200 200" class="w-full h-full">
+                        <circle cx="100" cy="100" r="70" fill="none" stroke="#334155" stroke-width="3" />
+                        <!-- Group circle inside -->
+                        <circle cx="130" cy="120" r="25" fill="none" stroke="#60a5fa" stroke-width="2" stroke-dasharray="3 3" />
+                        
+                        <circle cx="80" cy="80" r="6" fill="#38bdf8" />
+                        <circle cx="110" cy="75" r="6" fill="#38bdf8" />
+                        <circle cx="70" cy="115" r="6" fill="#38bdf8" />
+                        
+                        <!-- Integrated cluster -->
+                        <circle cx="125" cy="115" r="5" fill="#60a5fa" />
+                        <circle cx="135" cy="125" r="5" fill="#60a5fa" />
+                    </svg>
+                `
+            },
+            inclusion: {
+                title: "Inclusion",
+                badge: "Systemic Transformation",
+                badgeClass: "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30",
+                description: "A process that transforms the educational system to accommodate and empower ALL diverse learners together in a shared, accessible learning community.",
+                takeaway: "Inclusion rearranges the system so everyone naturally belongs.",
+                svg: `
+                    <svg viewBox="0 0 200 200" class="w-full h-full">
+                        <circle cx="100" cy="100" r="75" fill="none" stroke="#10b981" stroke-width="3" />
+                        
+                        <!-- Diverse mixed nodes together -->
+                        <circle cx="80" cy="70" r="6" fill="#38bdf8" />
+                        <circle cx="120" cy="75" r="6" fill="#34d399" />
+                        <circle cx="140" cy="110" r="6" fill="#a78bfa" />
+                        <circle cx="110" cy="140" r="6" fill="#f43f5e" />
+                        <circle cx="70" cy="130" r="6" fill="#fbbf24" />
+                        <circle cx="100" cy="100" r="6" fill="#38bdf8" />
+                        
+                        <!-- Connecting lines symbolizing community -->
+                        <line x1="80" y1="70" x2="100" y2="100" stroke="#059669" stroke-width="1" opacity="0.4" />
+                        <line x1="120" y1="75" x2="100" y2="100" stroke="#059669" stroke-width="1" opacity="0.4" />
+                        <line x1="140" y1="110" x2="100" y2="100" stroke="#059669" stroke-width="1" opacity="0.4" />
+                        <line x1="110" y1="140" x2="100" y2="100" stroke="#059669" stroke-width="1" opacity="0.4" />
+                        <line x1="70" y1="130" x2="100" y2="100" stroke="#059669" stroke-width="1" opacity="0.4" />
+                    </svg>
+                `
+            }
+        };
+
+        // Quiz Questions Data
+        const quizData = [
+            {
+                question: "What is the key difference between Integrated and Inclusive Education?",
+                options: [
+                    "Integrated education changes the entire school culture, while inclusive education uses special schools.",
+                    "Integrated education expects the child to adapt to the system; inclusive education adapts the system to the child.",
+                    "Inclusive education is only meant for students with physical disabilities.",
+                    "There is no difference; both terms mean the exact same thing."
+                ],
+                correct: 1,
+                explanation: "Correct! Integrated education forces the student to assimilate into an unadjusted system, whereas Inclusive education restructures environment and pedagogy to fit every child."
+            },
+            {
+                question: "According to the Social Model of Disability, what creates disability?",
+                options: [
+                    "The individual's physical or cognitive biological impairment alone.",
+                    "Lack of medical treatments and clinical diagnoses.",
+                    "Attitudinal, physical, and systemic barriers in society and environment.",
+                    "The inability of the child to study standard textbooks."
+                ],
+                correct: 2,
+                explanation: "Spot on! The Social Model posits that society's inaccessible design and negative attitudes create disability, not the impairment itself."
+            },
+            {
+                question: "Which principle is NOT one of the three pillars of Universal Design for Learning (UDL)?",
+                options: [
+                    "Multiple Means of Representation",
+                    "Multiple Means of Standardized Testing",
+                    "Multiple Means of Action & Expression",
+                    "Multiple Means of Engagement"
+                ],
+                correct: 1,
+                explanation: "Exactly! UDL emphasizes flexibility in presentation, expression, and engagement—not rigid standardized testing."
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let score = 0;
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('slide-total').innerText = totalSlides;
+            updateSlideView();
+            selectModel('inclusion');
+            loadQuizQuestion();
+            generateTOC();
+        });
+
+        // Navigation Functions
+        function updateSlideView() {
+            slides.forEach((slide, idx) => {
+                slide.classList.toggle('active', idx === currentSlide);
+            });
+
+            document.getElementById('slide-current').innerText = currentSlide + 1;
+            const progressPct = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('progress-bar').style.width = `${progressPct}%`;
+
+            // Button States
+            document.getElementById('btn-prev').disabled = (currentSlide === 0);
+            document.getElementById('btn-next').disabled = (currentSlide === totalSlides - 1);
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlideView();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlideView();
+            }
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlideView();
+            toggleTOC(false);
+        }
+
+        // Keyboard Shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'Space') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            }
+        });
+
+        // Model Selector Logic (Slide 3)
+        function selectModel(key) {
+            const data = modelsData[key];
+            if (!data) return;
+
+            // Update UI buttons
+            document.querySelectorAll('.model-btn').forEach(btn => {
+                btn.classList.remove('border-emerald-500', 'border-sky-500', 'border-amber-500', 'border-red-500', 'active-model');
+                btn.classList.add('border-slate-800');
+            });
+
+            const activeBtn = document.getElementById(`btn-model-${key}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('border-slate-800');
+                activeBtn.classList.add(
+                    key === 'inclusion' ? 'border-emerald-500' :
+                    key === 'integration' ? 'border-blue-500' :
+                    key === 'segregation' ? 'border-amber-500' : 'border-red-500'
+                );
+            }
+
+            // Update Display Box
+            document.getElementById('model-title').innerText = data.title;
+            document.getElementById('model-badge').innerText = data.badge;
+            document.getElementById('model-badge').className = `inline-block px-2.5 py-1 rounded text-xs font-bold uppercase tracking-wider mb-2 ${data.badgeClass}`;
+            document.getElementById('model-description').innerText = data.description;
+            document.getElementById('model-takeaway').innerText = data.takeaway;
+            document.getElementById('model-svg-container').innerHTML = data.svg;
+        }
+
+        // Quiz System (Slide 7)
+        function loadQuizQuestion() {
+            const q = quizData[currentQuizIndex];
+            document.getElementById('quiz-question-num').innerText = `Question ${currentQuizIndex + 1} of ${quizData.length}`;
+            document.getElementById('quiz-question').innerText = q.question;
+
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-sky-500 hover:bg-slate-800/50 text-slate-200 text-xs sm:text-sm font-medium transition flex items-start gap-3";
+                btn.onclick = () => checkAnswer(idx);
+                btn.innerHTML = `
+                    <span class="w-6 h-6 rounded-full bg-slate-800 text-slate-300 font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">${String.fromCharCode(65 + idx)}</span>
+                    <span>${opt}</span>
+                `;
+                optionsContainer.appendChild(btn);
+            });
+
+            document.getElementById('quiz-feedback').className = 'hidden p-4 rounded-xl text-sm font-medium mb-4';
+            document.getElementById('btn-quiz-next').classList.add('hidden');
+        }
+
+        function checkAnswer(selectedIndex) {
+            const q = quizData[currentQuizIndex];
+            const feedback = document.getElementById('quiz-feedback');
+            const options = document.getElementById('quiz-options').children;
+
+            // Disable all option buttons
+            for (let btn of options) {
+                btn.disabled = true;
+                btn.classList.add('opacity-60', 'cursor-not-allowed');
+            }
+
+            if (selectedIndex === q.correct) {
+                score++;
+                document.getElementById('quiz-score').innerText = `Score: ${score}`;
+                options[selectedIndex].classList.remove('opacity-60', 'bg-slate-950', 'border-slate-800');
+                options[selectedIndex].classList.add('bg-emerald-950/60', 'border-emerald-500', 'text-emerald-200');
+                
+                feedback.className = "p-4 rounded-xl text-xs sm:text-sm font-medium mb-4 bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 block";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i> ${q.explanation}`;
+            } else {
+                options[selectedIndex].classList.remove('opacity-60', 'bg-slate-950', 'border-slate-800');
+                options[selectedIndex].classList.add('bg-red-950/60', 'border-red-500', 'text-red-200');
+
+                // Highlight correct answer
+                options[q.correct].classList.remove('opacity-60');
+                options[q.correct].classList.add('border-emerald-500', 'text-emerald-300');
+
+                feedback.className = "p-4 rounded-xl text-xs sm:text-sm font-medium mb-4 bg-red-500/10 border border-red-500/30 text-red-300 block";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1.5"></i> Incorrect. ${q.explanation}`;
+            }
+
+            document.getElementById('btn-quiz-next').classList.remove('hidden');
+        }
+
+        function nextQuizQuestion() {
+            if (currentQuizIndex < quizData.length - 1) {
+                currentQuizIndex++;
+                loadQuizQuestion();
+            } else {
+                // Quiz Completed
+                document.getElementById('quiz-container').innerHTML = `
+                    <div class="text-center py-8">
+                        <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-3xl mx-auto mb-4">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Quiz Completed!</h3>
+                        <p class="text-slate-300 text-sm mb-4">You scored <span class="text-emerald-400 font-bold">${score}</span> out of ${quizData.length}.</p>
+                        <button onclick="resetQuiz()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-bold transition inline-flex items-center gap-2">
+                            <i class="fa-solid fa-rotate-right"></i> Retake Quiz
+                        </button>
+                    </div>
+                `;
+                document.getElementById('btn-quiz-next').classList.add('hidden');
+            }
+        }
+
+        function resetQuiz() {
+            currentQuizIndex = 0;
+            score = 0;
+            document.getElementById('quiz-score').innerText = `Score: 0`;
+            loadQuizQuestion();
+        }
+
+        // Table of Contents Modal
+        function generateTOC() {
+            const list = document.getElementById('toc-list');
+            const titles = [
+                "1. Introduction to Inclusive Education",
+                "2. What is Inclusive Education? (UNESCO)",
+                "3. Visualizing Education Models",
+                "4. Integrated vs. Inclusive Matrix",
+                "5. Medical vs. Social Model of Disability",
+                "6. Equity & Universal Design for Learning",
+                "7. Interactive Knowledge Check",
+                "8. Summary & Educator Takeaways"
+            ];
+
+            titles.forEach((title, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition flex justify-between items-center text-xs sm:text-sm";
+                btn.onclick = () => goToSlide(idx);
+                btn.innerHTML = `<span>${title}</span> <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>`;
+                list.appendChild(btn);
+            });
+        }
+
+        function toggleTOC(forceState) {
+            const modal = document.getElementById('modal-toc');
+            if (typeof forceState === 'boolean') {
+                modal.classList.toggle('hidden', !forceState);
+            } else {
+                modal.classList.toggle('hidden');
+            }
+        }
+
+        document.getElementById('btn-toc').addEventListener('click', () => toggleTOC());
+
+        // Fullscreen Toggle
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        document.getElementById('btn-fullscreen').addEventListener('click', toggleFullscreen);
+    </script>
+</body>
+</html>

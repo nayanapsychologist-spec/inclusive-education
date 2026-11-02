@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IEP Progress Tracking, Family Alignment & Annual Review Mastery Lab</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        },
+                        navy: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Top Navigation & Gamification Bar -->
+    <header class="bg-navy-900 text-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:h-16 flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-0">
+            <div class="flex items-center justify-between w-full sm:w-auto space-x-2 sm:space-x-3">
+                <div class="flex items-center space-x-2">
+                    <div class="bg-brand-500 text-white font-black px-2 py-1 rounded-lg text-sm tracking-wider">
+                        IEP<span class="text-slate-200 font-normal">Lab</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xs sm:text-sm md:text-base font-semibold leading-tight truncate max-w-[200px] sm:max-w-xs md:max-w-none">Classes 45 & 46: IEP & Family Alignment</h1>
+                        <p class="text-[10px] text-slate-400 hidden md:block">Inclusive Education Certification Program</p>
+                    </div>
+                </div>
+                <!-- Mobile Dossier / Stats toggle if needed -->
+            </div>
+
+            <div class="flex items-center justify-end w-full sm:w-auto space-x-1.5 sm:space-x-3">
+                <div class="bg-slate-800 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full flex items-center space-x-1 border border-slate-700">
+                    <i class="fa-solid fa-trophy text-amber-400 text-xs"></i>
+                    <span class="text-[11px] sm:text-xs font-bold text-slate-200" id="totalScore">XP: 0</span>
+                </div>
+                <div class="bg-slate-800 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full flex items-center space-x-1 border border-slate-700">
+                    <i class="fa-solid fa-layer-group text-blue-400 text-xs"></i>
+                    <span class="text-[11px] sm:text-xs font-bold text-slate-200" id="levelProgress">0/5</span>
+                </div>
+                <button onclick="toggleCaseModal()" class="bg-brand-600 hover:bg-brand-500 text-white px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1 transition shadow-sm">
+                    <i class="fa-solid fa-file-invoice"></i>
+                    <span class="hidden sm:inline">Dossier</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Navigation / Level Selector -->
+        <aside class="lg:col-span-3 space-y-4">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+                <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Session Roadmap</h2>
+                <nav class="space-y-1.5" id="levelNav">
+                    <!-- Nav items rendered dynamically -->
+                </nav>
+            </div>
+
+            <!-- Case Profile Quick Summary -->
+            <div class="bg-slate-900 text-white rounded-xl p-4 shadow-sm relative overflow-hidden">
+                <div class="absolute -right-4 -bottom-4 opacity-10 text-brand-500">
+                    <i class="fa-solid fa-user-graduate text-8xl"></i>
+                </div>
+                <div class="flex items-center space-x-2 text-xs font-semibold text-brand-400 uppercase tracking-wider mb-1">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <span>Target Learner Case</span>
+                </div>
+                <h3 class="text-lg font-bold text-white">Aarav (Grade 5)</h3>
+                <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+                    Specific Learning Disability (SLD) in reading comprehension and expressive written language. Preparing for middle school transition and annual IEP review.
+                </p>
+                <div class="mt-3 pt-3 border-t border-slate-800 flex justify-between items-center text-xs">
+                    <span class="text-slate-400">Current Focus:</span>
+                    <span class="text-amber-400 font-medium">Progress & Family Alignment</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Center Interactive Area -->
+        <main class="lg:col-span-9 space-y-6">
+            <!-- Active Level Banner -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6" id="levelHeader">
+                <!-- Level header injected here -->
+            </div>
+
+            <!-- Theory & University Content Section -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-4" id="levelTheory">
+                <!-- Theory injected here -->
+            </div>
+
+            <!-- Drill Practice Section -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6" id="levelDrill">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-pen-ruler text-brand-600"></i>
+                            Mastery Practice Drill & Case Integration
+                        </h3>
+                        <p class="text-xs text-slate-500">Answer all questions correctly to unlock the next level and update Aarav's IEP dossier.</p>
+                    </div>
+                    <span class="text-xs font-bold bg-slate-100 text-slate-600 px-2.5 py-1 rounded-md" id="drillScoreBadge">
+                        Drill: 0/5
+                    </span>
+                </div>
+
+                <div id="quizContainer" class="space-y-6">
+                    <!-- Questions injected dynamically -->
+                </div>
+
+                <div id="drillFooter" class="mt-6 pt-4 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-3 hidden">
+                    <div class="text-xs text-emerald-700 font-semibold flex items-center gap-2" id="drillSuccessMsg">
+                        <i class="fa-solid fa-circle-check"></i> Level drill completed! Dossier updated.
+                    </div>
+                    <button onclick="nextLevel()" id="nextLevelBtn" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition flex items-center justify-center gap-2 shadow-sm">
+                        <span>Proceed to Next Level</span> <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Live IEP Briefing & Family Alignment Simulation Modal -->
+    <div id="caseModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-200">
+            <div class="bg-navy-900 text-white p-6 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-brand-500 text-white rounded-lg">
+                        <i class="fa-solid fa-clipboard-user text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold">Cumulative Family IEP Briefing Dossier & Decision Matrix</h2>
+                        <p class="text-xs text-slate-400">Learner: Aarav • Built incrementally through mastery drills</p>
+                    </div>
+                </div>
+                <button onclick="toggleCaseModal()" class="text-slate-400 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-6 custom-scrollbar flex-1 bg-slate-50" id="modalReportContent">
+                <!-- Built live from state -->
+            </div>
+
+            <div class="p-4 bg-white border-t border-slate-200 flex justify-between items-center">
+                <span class="text-xs text-slate-500">Ready for parent presentation and annual review execution.</span>
+                <div class="space-x-2">
+                    <button onclick="copyReportText()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg text-xs transition">
+                        <i class="fa-solid fa-copy mr-1"></i> Copy Dossier
+                    </button>
+                    <button onclick="toggleCaseModal()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-lg text-xs transition">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Script Logic -->
+    <script>
+        // State Management
+        const state = {
+            currentLevel: 0,
+            xp: 0,
+            scores: [0, 0, 0, 0, 0],
+            completedLevels: [false, false, false, false, false],
+            caseReport: {
+                progressTracking: "Pending Level 0 completion...",
+                parentCommunication: "Pending Level 1 completion...",
+                annualReviewAudit: "Pending Level 2 completion...",
+                transitionPlanning: "Pending Level 3 completion...",
+                familyAlignmentRoleplay: "Pending Level 4 completion..."
+            }
+        };
+
+        // Course Levels Structure (Classes 45 & 46 Curriculum)
+        const levels = [
+            {
+                id: 0,
+                title: "Level 0: Quantitative Progress Tracking & Data Artifacts",
+                subtitle: "Translating qualitative observations into objective, measurable IEP growth data.",
+                theoryTitle: "Academic Foundation: Progress Monitoring & Validity",
+                theoryContent: `
+                    <p class="text-sm leading-relaxed text-slate-600">
+                        Effective progress tracking requires objective data collection artifacts (frequency counts, rubric scores, work sample portfolios) rather than subjective teacher intuition. 
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-4">
+                        <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 text-xs uppercase tracking-wide text-brand-700">1. Curriculum-Based Measurement</h4>
+                            <p class="text-xs text-slate-600 mt-1">Regular probes aligned directly with IEP annual goals (e.g., reading fluency words-per-minute or paragraph comprehension rubrics).</p>
+                        </div>
+                        <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 text-xs uppercase tracking-wide text-brand-700">2. Triangulation of Artifacts</h4>
+                            <p class="text-xs text-slate-600 mt-1">Combining teacher logs, student self-assessment checklists, and standardized probes to verify true skill mastery.</p>
+                        </div>
+                        <div class="bg-slate-50 p-3.5 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 text-xs uppercase tracking-wide text-brand-700">3. Graphical Trend Lines</h4>
+                            <p class="text-xs text-slate-600 mt-1">Plotting data points bi-weekly to evaluate if the student is on trajectory to meet annual targets.</p>
+                        </div>
+                    </div>
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-3 rounded text-xs text-blue-900">
+                        <strong>Case Spotlight (Aarav):</strong> Aarav has a reading comprehension goal: <em>"By end of Grade 5, Aarav will independently answer inferential comprehension questions from grade-level text with 80% accuracy across 4 consecutive trials."</em>
+                    </div>
+                `,
+                questions: [
+                    {
+                        q: "Which data collection method provides the strongest quantitative evidence for Aarav's reading comprehension IEP goal?",
+                        options: [
+                            "Teacher's general impression during morning circle time.",
+                            "Bi-weekly standardized reading passages with 5 aligned inferential comprehension questions scored against a rubric.",
+                            "Parent feedback collected once a semester.",
+                            "Number of library books Aarav checks out per month."
+                        ],
+                        correct: 1,
+                        rationale: "Option B provides direct, objective, and repeated measurement aligned exactly to the IEP goal criteria.",
+                        caseUpdateKey: "progressTracking",
+                        caseUpdateVal: "Bi-weekly CBM reading probes with rubric-scored inferential questions; baseline 45% -> current 72% accuracy."
+                    },
+                    {
+                        q: "When plotting Aarav's progress data on a graph, the trend line shows flat performance for 6 weeks. What immediate action should the educator take?",
+                        options: [
+                            "Wait until the annual review meeting to mention it.",
+                            "Lower the IEP goal criteria so he passes easily.",
+                            "Conduct an instructional diagnostic review to adjust scaffolding, aids, or intervention intensity.",
+                            "Discontinue progress monitoring."
+                        ],
+                        correct: 2,
+                        rationale: "Flat trend lines signal that current instructional scaffolding is insufficient; intervention adjustments must occur immediately.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "Why is maintaining a student work sample portfolio critical for special education documentation?",
+                        options: [
+                            "It provides concrete artifacts of growth for multidisciplinary team reviews and parent meetings.",
+                            "It is required purely for classroom aesthetic display.",
+                            "It replaces the need for standardized testing entirely.",
+                            "It prevents students from making errors."
+                        ],
+                        correct: 0,
+                        rationale: "Artifact portfolios validate numerical data and show qualitative growth trajectories to families.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "Which metric best represents rate-based fluency progress monitoring?",
+                        options: [
+                            "Words read correctly per minute (WCPM) on grade-level passages.",
+                            "Total hours spent sitting in the reading corner.",
+                            "Whether the student likes the book cover.",
+                            "Number of vocabulary words memorized in isolation."
+                        ],
+                        correct: 0,
+                        rationale: "WCPM is the standard Curriculum-Based Measurement for reading fluency rate.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "How frequently should progress monitoring data be formally reviewed by the educator team?",
+                        options: [
+                            "Every 2 to 4 weeks to allow timely instructional adjustments.",
+                            "Once every 3 years.",
+                            "Only on the final day of the school year.",
+                            "Whenever a parent complains."
+                        ],
+                        correct: 0,
+                        rationale: "Bi-monthly or monthly reviews ensure educators catch plateaus early.",
+                        caseUpdateKey: null
+                    }
+                ]
+            },
+            {
+                id: 1,
+                title: "Level 1: Family Alignment & Pre-Meeting Briefing Design",
+                subtitle: "Preparing families as collaborative partners before formal IEP meetings.",
+                theoryTitle: "Academic Foundation: Family-Centered Communication",
+                theoryContent: `
+                    <p class="text-sm leading-relaxed text-slate-600">
+                        Traditional IEP meetings often intimidate parents due to educational jargon and rushed timelines. <strong>Family Alignment</strong> bridges the school-home divide through proactive pre-briefings.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 text-xs">
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-800">Pre-Briefing Packet Components</h4>
+                            <p>• Plain-language data summaries (graphs over raw numbers).</p>
+                            <p>• Student self-reflection snapshot (strengths & goals).</p>
+                            <p>• Agenda sent 5 days prior to reduce anxiety.</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200 space-y-1">
+                            <h4 class="font-bold text-slate-800">Cultural & Linguistic Responsiveness</h4>
+                            <p>• Providing translated summaries in home languages.</p>
+                            <p>• Honoring family priorities and home cultural contexts.</p>
+                            <p>• Collaborative strength-based framing ("What Aarav can do with support").</p>
+                        </div>
+                    </div>
+                `,
+                questions: [
+                    {
+                        q: "What is the primary purpose of sending a Family IEP Briefing Draft 5 days prior to the formal meeting?",
+                        options: [
+                            "To legally overwhelm parents with paperwork.",
+                            "To eliminate surprises, reduce meeting anxiety, and empower families to review data and formulate questions in advance.",
+                            "To finish paperwork faster so teachers can leave early.",
+                            "To replace the face-to-face meeting entirely."
+                        ],
+                        correct: 1,
+                        rationale: "Pre-briefings build trust and active partnership, ensuring parents are co-creators rather than passive listeners.",
+                        caseUpdateKey: "parentCommunication",
+                        caseUpdateVal: "Sent plain-language progress packet & student self-reflection sheet to parents 5 days prior; scheduled check-in."
+                    },
+                    {
+                        q: "Aarav's parents express frustration during pre-briefing that school reports use confusing acronyms (SLD, CBM, Accommodations). How should you respond?",
+                        options: [
+                            "Tell them they need to study special education terminology.",
+                            "Immediately translate acronyms into clear, plain-language descriptions and provide a glossary reference guide.",
+                            "Continue using professional jargon so reports remain official.",
+                            "Ignore the comment and move on."
+                        ],
+                        correct: 1,
+                        rationale: "Effective family alignment demands accessible communication and removal of elitist jargon.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "When presenting Aarav's progress data to his parents, which framing exemplifies strength-based communication?",
+                        options: [
+                            "Aarav is failing grade-level reading standards and falling behind peers.",
+                            "Aarav has successfully mastered decoding and is now growing rapidly in inferential comprehension when using audio-text scaffolding.",
+                            "Aarav never finishes his work without constant supervision.",
+                            "Aarav's reading disability prevents him from succeeding."
+                        ],
+                        correct: 1,
+                        rationale: "Strength-based framing highlights existing competencies and scaffolding success rather than deficits alone.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "Which participant voice is essential to include in the pre-briefing packet alongside teacher data?",
+                        options: [
+                            "The student's own self-reflection and goal aspirations.",
+                            "The school principal's disciplinary records.",
+                            "Unfiltered peer comparison rankings.",
+                            "Standardized test cut scores from district averages."
+                        ],
+                        correct: 0,
+                        rationale: "Student self-advocacy and voice foster ownership and engagement in their own learning plan.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "If a family cannot attend the scheduled IEP meeting time due to work shifts, what is the most professional educator response?",
+                        options: [
+                            "Hold the meeting without them and mail the signed paperwork.",
+                            "Offer flexible alternatives (virtual video conference, evening phone briefing, or rescheduled time) to ensure family participation.",
+                            "Mark the parents as non-compliant.",
+                            "Cancel the IEP entirely."
+                        ],
+                        correct: 1,
+                        rationale: "Accommodating family schedules ensures meaningful participation and legal compliance.",
+                        caseUpdateKey: null
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "Level 2: Annual IEP Review & Compliance Auditing",
+                subtitle: "Conducting systematic annual reviews of present levels and goal achievement.",
+                theoryTitle: "Academic Foundation: The Annual Review Protocol",
+                theoryContent: `
+                    <p class="text-sm leading-relaxed text-slate-600">
+                        The annual IEP review is a legally mandated checkpoint where the multidisciplinary team evaluates whether annual goals were met, reviews current Present Levels of Academic Achievement and Functional Performance (PLAAFP), and drafts new goals.
+                    </p>
+                    <div class="space-y-2 my-4 text-xs">
+                        <div class="p-3 bg-brand-50 rounded-lg border border-brand-200">
+                            <strong class="text-brand-900">1. PLAAFP Update:</strong> Must reflect current data, standardized assessments, and classroom performance across all domains.
+                        </div>
+                        <div class="p-3 bg-brand-50 rounded-lg border border-brand-200">
+                            <strong class="text-brand-900">2. Goal Attainment Evaluation:</strong> Determine if previous goals were met, partially met, or require continuation/modification.
+                        </div>
+                        <div class="p-3 bg-brand-50 rounded-lg border border-brand-200">
+                            <strong class="text-brand-900">3. Accommodation Efficacy Audit:</strong> Review which testing and instructional accommodations actually supported the student vs. which were unused.
+                        </div>
+                    </div>
+                `,
+                questions: [
+                    {
+                        q: "During Aarav's annual review, the team notes he met 2 out of 3 IEP goals but fell short on written expression. What is the correct protocol for the un-met goal?",
+                        options: [
+                            "Delete it and pretend it never existed.",
+                            "Analyze the barrier, revise the goal for the upcoming year with refined scaffolding, or break it into more achievable short-term objectives.",
+                            "Retain the exact same goal unchanged for a second year without modifications.",
+                            "Punish the student for failing to meet district benchmarks."
+                        ],
+                        correct: 1,
+                        rationale: "Un-met goals require diagnostic analysis and instructional redesign, not deletion or blind repetition.",
+                        caseUpdateKey: "annualReviewAudit",
+                        caseUpdateVal: "Annual Review audit completed: Reading fluency goal met (90 WCPM); comprehension goal partially met; written expression goal revised with graphic organizer scaffolding."
+                    },
+                    {
+                        q: "What does PLAAFP stand for in special education documentation?",
+                        options: [
+                            "Primary Learning and Academic Assessment Flow Plan",
+                            "Present Levels of Academic Achievement and Functional Performance",
+                            "Progress Level Analysis and Annual Funding Protocol",
+                            "Parent Liaison and Administrative Action Plan"
+                        ],
+                        correct: 1,
+                        rationale: "PLAAFP is the foundational baseline section of every legal IEP document.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "When auditing accommodations for Aarav, you notice he never used the audio-recorder accommodation because he preferred text-to-speech software. What should the team do?",
+                        options: [
+                            "Force him to use the audio-recorder anyway.",
+                            "Update the IEP accommodations list to reflect what is actually effective and utilized (text-to-speech software).",
+                            "Remove all accommodations from the IEP.",
+                            "Keep both listed indefinitely."
+                        ],
+                        correct: 1,
+                        rationale: "Accommodations should be evidence-based and actively utilized by the student in daily instruction.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "Who are the mandatory members of an IEP annual review team under standard special education guidelines?",
+                        options: [
+                            "Only the school principal and special education teacher.",
+                            "Parent/Guardian, Special Education Teacher, General Education Teacher, and LEA (Local Educational Agency) representative.",
+                            "Only outside medical doctors and psychologists.",
+                            "The student's peers and classmates."
+                        ],
+                        correct: 1,
+                        rationale: "The IEP multidisciplinary team requires core representation across parents, special ed, general ed, and administration.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "Why is it important to document regression or plateauing during an annual review?",
+                        options: [
+                            "To justify adjustments to specialized instruction minutes or related services.",
+                            "To penalize the student on report cards.",
+                            "To lower academic standards permanently.",
+                            "To reduce school liability."
+                        ],
+                        correct: 0,
+                        rationale: "Documenting lack of progress justifies modifying service minutes or support levels.",
+                        caseUpdateKey: null
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Level 3: Transition Planning & Multi-Year Growth Mapping",
+                subtitle: "Preparing students for grade transitions, middle/high school, and post-secondary independence.",
+                theoryTitle: "Academic Foundation: Transition Planning (Class 46 Focus)",
+                theoryContent: `
+                    <p class="text-sm leading-relaxed text-slate-600">
+                        Transition planning ensures students successfully navigate major educational milestones (e.g., elementary to middle school, middle to high school, or graduation). For students with SLD like Aarav, transition planning focuses on <strong>self-advocacy and executive functioning independence</strong>.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 my-4 text-xs">
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <strong>1. Environmental Familiarization:</strong> Middle school campus tours, locker practice, and meeting multiple subject teachers.
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <strong>2. Self-Advocacy Skills:</strong> Teaching students to articulate their IEP accommodations directly to teachers.
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <strong>3. Assistive Tech Independence:</strong> Fading adult scribes/prompting in favor of independent digital tools.
+                        </div>
+                    </div>
+                `,
+                questions: [
+                    {
+                        q: "Aarav is transitioning from Grade 5 (single homeroom teacher) to Grade 6 (rotating subject teachers across different classrooms). Which transition support is most critical?",
+                        options: [
+                            "Having his parents attend every 6th-grade class with him.",
+                            "Teaching Aarav executive functioning self-management tools (color-coded digital/paper planners and self-advocacy accommodation cards).",
+                            "Removing all accommodations so he adapts quickly to middle school rigor.",
+                            "Exempting him from all homework."
+                        ],
+                        correct: 1,
+                        rationale: "Middle school requires robust executive functioning and self-advocacy since students navigate multiple teachers.",
+                        caseUpdateKey: "transitionPlanning",
+                        caseUpdateVal: "Transition Plan: Middle school orientation scheduled; self-advocacy accommodation card created; digital planner implemented for multi-teacher schedule."
+                    },
+                    {
+                        q: "What is the primary goal of teaching self-advocacy to an upper elementary student with an IEP?",
+                        options: [
+                            "To make the student entirely independent in explaining their learning needs and requesting accommodations without adult rescue.",
+                            "To replace special education teachers entirely.",
+                            "To allow students to grade their own tests.",
+                            "To eliminate the need for an IEP."
+                        ],
+                        correct: 0,
+                        rationale: "Self-advocacy prepares students for secondary education independence and adult life.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "When should middle school transition planning officially begin within the annual IEP cycle?",
+                        options: [
+                            "During the final week of Grade 6.",
+                            "Proactively during the Grade 5 annual review year through targeted goal setting and orientation activities.",
+                            "After the student fails their first middle school semester.",
+                            "Only when requested by high school admissions."
+                        ],
+                        correct: 1,
+                        rationale: "Early proactive transition planning prevents middle school shock and regression.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "Which assistive technology skill is most empowering for a Grade 5 student with writing/reading barriers entering middle school?",
+                        options: [
+                            "Proficiency in speech-to-text dictation and text-to-speech screen readers.",
+                            "Knowing how to turn off classroom computers.",
+                            "Typing speed of 120 words per minute.",
+                            "Using a traditional encyclopedia."
+                        ],
+                        correct: 0,
+                        rationale: "Digital assistive tools enable independent essay drafting and reading access across middle school subjects.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "How can general education teachers in middle school be best aligned to support Aarav's transition?",
+                        options: [
+                            "By reviewing Aarav's IEP accommodation summary sheet prior to the start of the academic term.",
+                            "By assuming all students learn identically.",
+                            "By keeping IEP contents strictly confidential from teachers.",
+                            "By testing him without accommodations first to see if he still needs them."
+                        ],
+                        correct: 0,
+                        rationale: "Teacher briefing ensures seamless accommodation implementation across all subject classrooms.",
+                        caseUpdateKey: null
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "Level 4: Family IEP Meeting Roleplay & Decision Matrix",
+                subtitle: "Navigating complex parent conferences and alignment friction using a professional decision matrix.",
+                theoryTitle: "Academic Foundation: Managing IEP Meeting Friction & Consensus",
+                theoryContent: `
+                    <p class="text-sm leading-relaxed text-slate-600">
+                        Even with excellent pre-briefings, live IEP meetings can involve parental anxiety, disagreement over goals, or resistance to transition recommendations. 
+                    </p>
+                    <div class="p-3 bg-amber-50 border-l-4 border-amber-500 rounded text-xs text-amber-900 my-3">
+                        <strong>Simulation Scenario:</strong> During Aarav's Annual Review and Transition meeting, Aarav's mother expresses deep anxiety: <em>"I am worried middle school teachers won't understand his reading struggles, and I think he needs to stay in a segregated resource room all day instead of general education classes."</em>
+                    </div>
+                    <p class="text-xs text-slate-600">
+                        Use the interactive decision matrix below to evaluate the best professional response that upholds Least Restrictive Environment (LRE) principles while validating family concerns.
+                    </p>
+                `,
+                questions: [
+                    {
+                        q: "How should the educator first respond to the mother's expressed anxiety regarding middle school and placement?",
+                        options: [
+                            "Tell her she is wrong and that inclusion is mandatory without discussion.",
+                            "Empathetically validate her fear of middle school transition while presenting data on Aarav's successful general education growth and proposing a robust support plan.",
+                            "Immediately agree to full-day segregation to avoid argument.",
+                            "Suggest that Aarav repeat Grade 5."
+                        ],
+                        correct: 1,
+                        rationale: "Empathy combined with evidence-based data builds collaborative consensus and eases parent anxiety.",
+                        caseUpdateKey: "familyAlignmentRoleplay",
+                        caseUpdateVal: "Roleplay Resolved: Addressed parent anxiety with data-backed LRE transition plan, middle school teacher briefing, and student self-advocacy check-ins."
+                    },
+                    {
+                        q: "Under IDEA (Individuals with Disabilities Education Act), what legal principle governs the mother's request for full-day segregated placement?",
+                        options: [
+                            "Least Restrictive Environment (LRE) — students with disabilities must be educated with non-disabled peers to the maximum extent appropriate.",
+                            "Maximum Segregation Rule.",
+                            "Parental Veto Clause.",
+                            "District Budget Limitation Principle."
+                        ],
+                        correct: 0,
+                        rationale: "LRE mandates inclusion in general education settings with supplementary aids and services whenever possible.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "What compromise bridges the mother's fear with LRE compliance?",
+                        options: [
+                            "Providing targeted push-in support and assistive tech during general education reading while scheduling a mid-term check-in.",
+                            "Isolating the student in the library.",
+                            "Giving no support and hoping for the best.",
+                            "Requiring parents to tutor him during class."
+                        ],
+                        correct: 0,
+                        rationale: "Push-in support and assistive technology maintain general education placement while providing specialized scaffolding.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "During the meeting, an administrator mentions budget constraints for assistive tech. How should the multidisciplinary team respond?",
+                        options: [
+                            "Agree immediately to deny the student tools.",
+                            "Advocate for student-centered need: IEP legally mandates required services/aids based on student necessity, not budgetary convenience.",
+                            "Ask parents to purchase expensive software themselves.",
+                            "Ignore the assistive tech discussion."
+                        ],
+                        correct: 1,
+                        rationale: "IEP legally supersedes local budgetary constraints; student need dictates required accommodations.",
+                        caseUpdateKey: null
+                    },
+                    {
+                        q: "How does concluding the IEP meeting with a clear 'Action Item & Follow-up Matrix' ensure long-term family alignment?",
+                        options: [
+                            "It assigns clear responsibilities, deadlines, and communication channels so all stakeholders know who is doing what post-meeting.",
+                            "It ends the meeting as quickly as possible.",
+                            "It legally binds parents to do all homework.",
+                            "It prevents parents from ever calling the school again."
+                        ],
+                        correct: 0,
+                        rationale: "Clear action matrices ensure accountability and maintain trust long after the meeting concludes.",
+                        caseUpdateKey: null
+                    }
+                ]
+            }
+        ];
+
+        // Core App Initialization & Event Handlers
+        document.addEventListener('DOMContentLoaded', () => {
+            renderNav();
+            loadLevel(0);
+        });
+
+        function renderNav() {
+            const nav = document.getElementById('levelNav');
+            nav.innerHTML = levels.map((lvl, index) => {
+                const isCurrent = index === state.currentLevel;
+                const isCompleted = state.completedLevels[index];
+                
+                let statusIcon = '<i class="fa-regular fa-circle text-slate-300"></i>';
+                if (isCompleted) {
+                    statusIcon = '<i class="fa-solid fa-circle-check text-emerald-500"></i>';
+                } else if (isCurrent) {
+                    statusIcon = '<i class="fa-solid fa-spinner fa-spin text-brand-600"></i>';
+                }
+
+                return `
+                    <button onclick="switchLevel(${index})" 
+                        class="w-full text-left px-3 py-2.5 rounded-lg flex items-center justify-between transition text-xs font-medium
+                        ${isCurrent ? 'bg-brand-50 text-brand-800 border border-brand-200 font-semibold' : 'hover:bg-slate-100 text-slate-600'}">
+                        <div class="flex items-center space-x-2.5 truncate">
+                            ${statusIcon}
+                            <span class="truncate">${lvl.title.split(':')[0]}</span>
+                        </div>
+                        <span class="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded ml-1">${state.scores[index]}/5</span>
+                    </button>
+                `;
+            }).join('');
+
+            // Update header score counters
+            document.getElementById('totalScore').innerText = `XP: ${state.xp} / 1000`;
+            const completedCount = state.completedLevels.filter(Boolean).length;
+            document.getElementById('levelProgress').innerText = `Progress: ${completedCount}/5`;
+        }
+
+        function loadLevel(levelIndex) {
+            state.currentLevel = levelIndex;
+            const lvl = levels[levelIndex];
+
+            // Render Header
+            document.getElementById('levelHeader').innerHTML = `
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-brand-600 bg-brand-50 px-2 py-0.5 rounded">
+                            ${lvl.title.split(':')[0]}
+                        </span>
+                        <h2 class="text-xl font-extrabold text-slate-900 mt-1">${lvl.title.split(':')[1] || lvl.title}</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">${lvl.subtitle}</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-slate-400">Level Reward:</span>
+                        <span class="text-xs font-bold text-amber-600 block"><i class="fa-solid fa-award"></i> +200 XP</span>
+                    </div>
+                </div>
+            `;
+
+            // Render Theory
+            document.getElementById('levelTheory').innerHTML = `
+                <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-graduation-cap text-brand-600"></i>
+                    ${lvl.theoryTitle}
+                </h3>
+                ${lvl.theoryContent}
+            `;
+
+            // Render Drill Questions
+            renderDrill(lvl);
+            renderNav();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderDrill(lvl) {
+            const container = document.getElementById('quizContainer');
+            document.getElementById('drillScoreBadge').innerText = `Drill: ${state.scores[lvl.id]}/5`;
+
+            container.innerHTML = lvl.questions.map((q, qIndex) => {
+                return `
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3" id="qContainer_${qIndex}">
+                        <div class="flex items-start justify-between gap-2">
+                            <span class="text-xs font-bold bg-slate-200 text-slate-700 px-2 py-0.5 rounded">
+                                Question ${qIndex + 1}
+                            </span>
+                            <span id="qFeedbackBadge_${qIndex}" class="text-xs font-semibold hidden"></span>
+                        </div>
+                        <p class="text-sm font-medium text-slate-800">${q.q}</p>
+                        
+                        <div class="space-y-2">
+                            ${q.options.map((opt, oIndex) => `
+                                <button onclick="handleAnswer(${lvl.id}, ${qIndex}, ${oIndex})" 
+                                    id="opt_${qIndex}_${oIndex}"
+                                    class="w-full text-left p-2.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs text-slate-700 transition flex items-center justify-between">
+                                    <span>${opt}</span>
+                                    <i class="fa-regular fa-circle text-slate-300" id="icon_${qIndex}_${oIndex}"></i>
+                                </button>
+                            `).join('')}
+                        </div>
+
+                        <div id="rationale_${qIndex}" class="p-3 bg-blue-50 border border-blue-200 rounded-lg text-xs text-blue-900 hidden">
+                            <strong>Pedagogical Rationale:</strong> ${q.rationale}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Check if drill complete
+            checkDrillCompletion(lvl.id);
+        }
+
+        function handleAnswer(lvlId, qIndex, selectedOpt) {
+            const q = levels[lvlId].questions[qIndex];
+            const container = document.getElementById(`qContainer_${qIndex}`);
+            
+            // Disable buttons for this question
+            const buttons = container.querySelectorAll('button');
+            buttons.forEach(btn => btn.disabled = true);
+
+            const selectedBtn = document.getElementById(`opt_${qIndex}_${selectedOpt}`);
+            const selectedIcon = document.getElementById(`icon_${qIndex}_${selectedOpt}`);
+            const rationale = document.getElementById(`rationale_${qIndex}`);
+            const feedbackBadge = document.getElementById(`qFeedbackBadge_${qIndex}`);
+
+            const correctIndex = q.correctOptionIndex !== undefined ? q.correctOptionIndex : q.correct;
+
+            if (selectedOpt === correctIndex) {
+                selectedBtn.classList.remove('bg-white', 'border-slate-200');
+                selectedBtn.classList.add('bg-emerald-50', 'border-emerald-500', 'text-emerald-900', 'font-semibold');
+                selectedIcon.className = "fa-solid fa-circle-check text-emerald-600";
+                
+                feedbackBadge.innerText = "Correct (+40 XP)";
+                feedbackBadge.className = "text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded block";
+                
+                // Score & XP updates
+                state.scores[lvlId] = Math.min(5, state.scores[lvlId] + 1);
+                state.xp += 40;
+
+                // Update Case File if applicable
+                if (q.caseUpdateKey) {
+                    state.caseReport[q.caseUpdateKey] = q.caseUpdateVal;
+                }
+            } else {
+                selectedBtn.classList.remove('bg-white', 'border-slate-200');
+                selectedBtn.classList.add('bg-rose-50', 'border-rose-500', 'text-rose-900');
+                selectedIcon.className = "fa-solid fa-circle-xmark text-rose-600";
+
+                // Highlight correct answer
+                const correctBtn = document.getElementById(`opt_${qIndex}_${correctIndex}`);
+                const correctIcon = document.getElementById(`icon_${qIndex}_${correctIndex}`);
+                correctBtn.classList.add('bg-emerald-50', 'border-emerald-400');
+                correctIcon.className = "fa-solid fa-circle-check text-emerald-600";
+
+                feedbackBadge.innerText = "Incorrect";
+                feedbackBadge.className = "text-xs font-semibold text-rose-600 bg-rose-50 px-2 py-0.5 rounded block";
+            }
+
+            rationale.classList.remove('hidden');
+            document.getElementById('drillScoreBadge').innerText = `Drill: ${state.scores[lvlId]}/5`;
+            document.getElementById('totalScore').innerText = `XP: ${state.xp} / 1000`;
+
+            checkDrillCompletion(lvlId);
+        }
+
+        function checkDrillCompletion(lvlId) {
+            const lvl = levels[lvlId];
+            const qContainers = document.querySelectorAll('[id^="qContainer_"]');
+            let answeredCount = 0;
+
+            qContainers.forEach(c => {
+                if (c.querySelector('button[disabled]')) answeredCount++;
+            });
+
+            if (answeredCount === lvl.questions.length) {
+                state.completedLevels[lvlId] = true;
+                const drillFooter = document.getElementById('drillFooter');
+                const nextBtn = document.getElementById('nextLevelBtn');
+
+                if (lvlId < levels.length - 1) {
+                    nextBtn.innerHTML = `<span>Proceed to Next Level</span> <i class="fa-solid fa-arrow-right"></i>`;
+                } else {
+                    nextBtn.innerHTML = `<span>Review Final Family IEP Dossier</span> <i class="fa-solid fa-file-invoice"></i>`;
+                }
+
+                drillFooter.classList.remove('hidden');
+                renderNav();
+            }
+        }
+
+        function switchLevel(lvlIndex) {
+            loadLevel(lvlIndex);
+        }
+
+        function nextLevel() {
+            if (state.currentLevel < levels.length - 1) {
+                loadLevel(state.currentLevel + 1);
+            } else {
+                toggleCaseModal();
+            }
+        }
+
+        function toggleCaseModal() {
+            const modal = document.getElementById('caseModal');
+            const content = document.getElementById('modalReportContent');
+
+            content.innerHTML = `
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4 text-xs">
+                    <div class="border-b border-slate-200 pb-3 flex justify-between items-center">
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-900">FAMILY IEP BRIEFING DOSSIER & ANNUAL REVIEW MATRIX</h3>
+                            <p class="text-slate-500 text-[11px]">Inclusive Education Certification • Learner: Aarav (Grade 5)</p>
+                        </div>
+                        <span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+                            Status: Ready for Parent Meeting Simulation
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 bg-slate-50 p-3 rounded-lg border border-slate-200">
+                        <div><strong>Student Name:</strong> Aarav</div>
+                        <div><strong>Grade Placement:</strong> Grade 5 (Transitioning to Grade 6)</div>
+                        <div><strong>Primary Diagnosis:</strong> Specific Learning Disability (SLD)</div>
+                        <div><strong>Focus:</strong> Progress Tracking, Annual Review & Transition</div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 text-xs text-brand-700 uppercase">1. Quantitative Progress Tracking Artifacts</h4>
+                            <p class="mt-1 text-slate-700 leading-relaxed">${state.caseReport.progressTracking}</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 text-xs text-brand-700 uppercase">2. Family Pre-Meeting Communication & Alignment</h4>
+                            <p class="mt-1 text-slate-700 leading-relaxed">${state.caseReport.parentCommunication}</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 text-xs text-brand-700 uppercase">3. Annual Review Audit & PLAAFP Update</h4>
+                            <p class="mt-1 text-slate-700 leading-relaxed">${state.caseReport.annualReviewAudit}</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 text-xs text-brand-700 uppercase">4. Middle School Transition & Self-Advocacy Plan</h4>
+                            <p class="mt-1 text-slate-700 leading-relaxed">${state.caseReport.transitionPlanning}</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-800 text-xs text-brand-700 uppercase">5. Family IEP Meeting Decision Matrix & Roleplay Resolution</h4>
+                            <p class="mt-1 text-slate-700 leading-relaxed">${state.caseReport.familyAlignmentRoleplay}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.toggle('hidden');
+        }
+
+        function copyReportText() {
+            const reportText = `
+FAMILY IEP BRIEFING DOSSIER & ANNUAL REVIEW MATRIX
+Student: Aarav (Grade 5)
+Primary Diagnosis: Specific Learning Disability (SLD)
+
+1. PROGRESS TRACKING ARTIFACTS:
+${state.caseReport.progressTracking}
+
+2. FAMILY PRE-MEETING COMMUNICATION:
+${state.caseReport.parentCommunication}
+
+3. ANNUAL REVIEW AUDIT:
+${state.caseReport.annualReviewAudit}
+
+4. TRANSITION PLANNING:
+${state.caseReport.transitionPlanning}
+
+5. FAMILY ALIGNMENT ROLEPLAY & DECISION MATRIX:
+${state.caseReport.familyAlignmentRoleplay}
+            `;
+
+            const tempInput = document.createElement("textarea");
+            tempInput.value = reportText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            alert("Dossier copied to clipboard!");
+        }
+    </script>
+</body>
+</html>

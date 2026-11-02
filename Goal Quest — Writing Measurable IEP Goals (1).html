@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Goal Quest — Writing Measurable IEP Goals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0F2438; --bg2:#16324A; --panel:#1C3B54; --line:rgba(237,230,214,.14);
+  --ink:#ECE3D0; --ink-dim:#B9C6D1;
+  --amber:#E8A33D; --teal:#5FAE8D; --coral:#D9694F;
+  --radius:14px;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  box-sizing:border-box;
+}
+*{box-sizing:border-box;}
+html{scroll-padding-top:env(safe-area-inset-top,0px);}
+body{
+  margin:0; min-height:100%; background:
+    radial-gradient(circle at 15% 0%, #16324A 0%, var(--bg) 55%);
+  color:var(--ink); font-family:'Inter',system-ui,sans-serif; line-height:1.5;
+}
+h1,h2,h3,.serif{font-family:'Fraunces',serif;}
+::selection{background:var(--amber); color:#1a1a1a;}
+a{color:var(--amber);}
+.wrap{max-width:920px; margin:0 auto; padding:28px 20px 60px;}
+
+/* Top bar */
+.topbar{position:sticky; top:env(safe-area-inset-top,0px); z-index:20; background:rgba(15,36,56,.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--line);}
+.topbar-in{max-width:920px; margin:0 auto; display:flex; align-items:center; gap:16px; padding:12px 20px;}
+.topbar h1{font-size:18px; margin:0; font-weight:600; letter-spacing:.2px; flex:1;}
+.xp{font-size:13px; color:var(--amber); font-weight:600; white-space:nowrap;}
+.progress-track{height:6px; background:var(--panel); border-radius:4px; overflow:hidden; margin:0 20px 0; max-width:920px; margin-left:auto; margin-right:auto;}
+.progress-fill{height:100%; background:linear-gradient(90deg,var(--teal),var(--amber)); width:0%; transition:width .5s ease;}
+
+/* Screens */
+.screen{display:none; animation:fade .35s ease;}
+.screen.active{display:block;}
+@keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+@media (prefers-reduced-motion:reduce){.screen{animation:none;} .progress-fill{transition:none;}}
+
+/* Intro / profile select */
+.intro h2{font-size:30px; margin:6px 0 8px; font-weight:600;}
+.intro p{color:var(--ink-dim); max-width:62ch; font-size:15.5px;}
+.profile-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:22px;}
+@media(max-width:640px){.profile-grid{grid-template-columns:1fr;}}
+.profile-card{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:18px; text-align:left; cursor:pointer; color:var(--ink); transition:border-color .15s, transform .15s;}
+.profile-card:hover{border-color:var(--amber); transform:translateY(-2px);}
+.profile-card .emoji{font-size:26px;}
+.profile-card h3{margin:8px 0 2px; font-size:17px;}
+.profile-card .tag{color:var(--amber); font-size:12.5px; font-weight:600;}
+.profile-card p{color:var(--ink-dim); font-size:13.5px; margin:8px 0 0;}
+
+/* Level map */
+.map-title{font-size:22px; margin:4px 0 2px; font-weight:600;}
+.map-sub{color:var(--ink-dim); font-size:14px; margin-bottom:20px;}
+.goalbuilder{background:var(--panel); border:1px dashed var(--line); border-radius:var(--radius); padding:14px 16px; font-size:14px; margin-bottom:24px;}
+.goalbuilder b{color:var(--teal); display:block; font-size:11.5px; letter-spacing:.3px; margin-bottom:6px;}
+.goalbuilder .blank{color:var(--ink-dim); border-bottom:1px dotted var(--ink-dim);}
+.goalbuilder .filled{color:var(--amber); font-weight:600;}
+.trail{display:flex; flex-direction:column; gap:4px;}
+.node{display:flex; align-items:center; gap:14px; padding:14px 16px; border-radius:var(--radius); border:1px solid var(--line); background:var(--panel); cursor:pointer; position:relative;}
+.node.locked{opacity:.45; cursor:not-allowed;}
+.node.done{border-color:var(--teal);}
+.node:not(.locked):hover{border-color:var(--amber);}
+.node:nth-child(even){margin-left:34px;}
+.node:nth-child(odd){margin-right:34px;}
+@media(max-width:560px){.node:nth-child(even),.node:nth-child(odd){margin-left:0;margin-right:0;}}
+.node .num{width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--bg2); font-weight:700; font-family:'Fraunces',serif; flex-shrink:0;}
+.node.done .num{background:var(--teal); color:#0F2438;}
+.node .info{flex:1;}
+.node .info .lvl-name{font-weight:600; font-size:15px;}
+.node .info .lvl-desc{font-size:12.5px; color:var(--ink-dim);}
+.node .badge-icon{font-size:20px;}
+
+/* Level screen */
+.level-head{display:flex; align-items:center; gap:10px; margin-bottom:6px;}
+.level-head .num{width:38px;height:38px;border-radius:50%;background:var(--amber);color:#1a1a1a;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;flex-shrink:0;}
+.level-head h2{font-size:21px; margin:0; font-weight:600;}
+.scenario{background:var(--panel); border-left:3px solid var(--teal); border-radius:0 var(--radius) var(--radius) 0; padding:14px 16px; margin:18px 0; font-size:14.5px;}
+.scenario b{color:var(--teal); font-size:11.5px; letter-spacing:.3px; display:block; margin-bottom:4px;}
+.teach{font-size:15px; color:var(--ink); margin:16px 0;}
+.card{background:var(--bg2); border:1px solid var(--line); border-radius:var(--radius); padding:18px; margin-top:14px;}
+.q{font-weight:600; margin-bottom:12px; font-size:15px;}
+.opt{display:block; width:100%; text-align:left; background:var(--panel); border:1px solid var(--line); color:var(--ink); padding:11px 14px; border-radius:10px; margin-bottom:8px; cursor:pointer; font-size:14px; font-family:inherit;}
+.opt:hover:not(:disabled){border-color:var(--amber);}
+.opt.correct{border-color:var(--teal); background:rgba(95,174,141,.18);}
+.opt.wrong{border-color:var(--coral); background:rgba(217,105,79,.18);}
+.opt:disabled{cursor:default;}
+.explain{margin-top:12px; font-size:13.5px; padding:12px 14px; border-radius:10px; background:var(--bg); border:1px solid var(--line); display:none;}
+.explain.show{display:block;}
+.match-row{display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:10px 0; border-bottom:1px solid var(--line);}
+.match-row:last-child{border-bottom:none;}
+.match-term{flex:1 1 100%; font-size:14px; margin-bottom:2px;}
+.match-btn{flex:1; min-width:140px; background:var(--panel); border:1px solid var(--line); color:var(--ink); padding:8px 10px; border-radius:8px; cursor:pointer; font-size:13px; font-family:inherit;}
+.match-btn.correct{border-color:var(--teal); background:rgba(95,174,141,.18);}
+.match-btn.wrong{border-color:var(--coral); background:rgba(217,105,79,.18);}
+.order-row{display:flex; align-items:center; gap:10px; padding:8px 0;}
+.order-row select{background:var(--bg); color:var(--ink); border:1px solid var(--line); border-radius:6px; padding:5px 8px; font-family:inherit;}
+.btn{display:inline-block; background:var(--amber); color:#1a1a1a; border:none; padding:11px 22px; border-radius:10px; font-weight:700; font-size:14.5px; cursor:pointer; font-family:inherit;}
+.btn:disabled{opacity:.35; cursor:not-allowed;}
+.btn.ghost{background:transparent; border:1px solid var(--line); color:var(--ink); font-weight:600;}
+.row{display:flex; gap:10px; margin-top:18px; flex-wrap:wrap;}
+.back{background:none; border:none; color:var(--ink-dim); cursor:pointer; font-size:13px; margin-bottom:14px; padding:0; font-family:inherit;}
+.back:hover{color:var(--amber);}
+.toast{position:fixed; top:16px; left:50%; transform:translateX(-50%); background:var(--teal); color:#0F2438; padding:10px 18px; border-radius:10px; font-weight:700; font-size:13.5px; z-index:60; opacity:0; pointer-events:none; transition:opacity .25s, top .25s;}
+.toast.show{opacity:1; top:calc(16px + env(safe-area-inset-top,0px));}
+
+/* Final */
+.certificate{background:linear-gradient(160deg,var(--panel),var(--bg2)); border:1px solid var(--amber); border-radius:var(--radius); padding:26px; text-align:center;}
+.certificate h2{font-size:24px; margin:6px 0 2px;}
+.goal-final{background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:18px; margin:18px 0; font-size:15px; text-align:left;}
+.goal-final b{color:var(--teal); display:block; font-size:11.5px; letter-spacing:.3px; margin-bottom:6px;}
+.obj-list{text-align:left; margin:14px 0 0; padding-left:0; list-style:none;}
+.obj-list li{background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:10px 14px; margin-bottom:8px; font-size:13.5px;}
+.badges-earned{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:16px 0;}
+.badges-earned span{background:var(--bg); border:1px solid var(--amber); color:var(--amber); font-size:12px; padding:6px 12px; border-radius:20px; font-weight:600;}
+footer{text-align:center; color:var(--ink-dim); font-size:12px; padding:20px 0 4px;}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <h1 id="topTitle">🎯 Goal Quest</h1>
+    <span class="xp" id="xpLabel">0 XP</span>
+  </div>
+</div>
+<div class="progress-track"><div class="progress-fill" id="progFill"></div></div>
+
+<div class="wrap">
+
+  <!-- SCREEN 0: Intro / profile select -->
+  <section class="screen active" id="screen-intro">
+    <div class="intro">
+      <h2>Writing Measurable IEP Goals</h2>
+      <p>Eight levels, one skill: turning a vague hope into a SMART, measurable IEP goal with real objectives. Pick a student case study — you'll build their actual annual goal as you climb, level by level.</p>
+    </div>
+    <div class="profile-grid" id="profileGrid"></div>
+  </section>
+
+  <!-- SCREEN 1: Level map -->
+  <section class="screen" id="screen-map">
+    <button class="back" onclick="showScreen('intro')">← Choose a different student</button>
+    <div class="map-title" id="mapTitle"></div>
+    <div class="map-sub" id="mapSub"></div>
+    <div class="goalbuilder" id="goalBuilder"></div>
+    <div class="trail" id="trail"></div>
+  </section>
+
+  <!-- SCREEN 2: Level detail -->
+  <section class="screen" id="screen-level">
+    <button class="back" onclick="showScreen('map')">← Level map</button>
+    <div class="level-head"><div class="num" id="lvlNum"></div><h2 id="lvlName"></h2></div>
+    <div class="teach" id="lvlTeach"></div>
+    <div class="scenario" id="lvlScenario"></div>
+    <div class="card" id="lvlDrill"></div>
+    <div class="row">
+      <button class="btn" id="continueBtn" disabled onclick="completeLevel()">Continue →</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 3: Certificate -->
+  <section class="screen" id="screen-final">
+    <button class="back" onclick="showScreen('map')">← Level map</button>
+    <div class="certificate">
+      <div style="font-size:34px;">🏆</div>
+      <h2>Goal Architect — Quest Complete</h2>
+      <p style="color:var(--ink-dim); font-size:14px;" id="finalSub"></p>
+      <div class="goal-final"><b>THE ANNUAL SMART GOAL</b><span id="finalGoal"></span></div>
+      <div class="goal-final"><b>SHORT-TERM OBJECTIVES</b><ul class="obj-list" id="finalObjs"></ul></div>
+      <div class="badges-earned" id="finalBadges"></div>
+      <button class="btn" onclick="showScreen('intro')">Try another case study</button>
+    </div>
+  </section>
+
+  <footer>Built for the Inclusive Education batch · Practice scenarios are illustrative, not real students.</footer>
+</div>
+
+<script>
+/* ---------- DATA ---------- */
+const PROFILES = {
+  reading:{emoji:"📖", name:"Aarav", grade:"Grade 3", category:"Specific Learning Disability (Dyslexia)", domain:"reading decoding fluency", subj:"he", poss:"his",
+    caseNotes:"Observation notes: Reads grade-2 passages aloud in guided reading group. Timed fluency check = 32 words per minute. Decoding probe on unfamiliar words = 58% accuracy. Frequently glances at picture cues before attempting to sound out a word. Enjoys read-alouds but avoids independent reading time.",
+    presentLevel:"Aarav currently reads grade-2 level text at 32 words per minute with 58% decoding accuracy on unfamiliar words, relying on picture cues rather than phonetic decoding strategies.",
+    vagueGoal:"Aarav will improve his reading skills.",
+    specificSkillCorrect:"decode CVC and CVCe words using phonics-based blending strategies",
+    baselineMetric:"32 words correct per minute (WCPM) with 58% decoding accuracy",
+    measureType:"curriculum-based measurement (CBM) oral reading fluency probes and a decoding accuracy checklist",
+    targetCriterion:"60 WCPM with 85% decoding accuracy on grade-3 text",
+    condition:"When given a grade-3 level decodable passage",
+    timeframe:"the end of the 2026–27 academic year",
+    trialsCriterion:"3 consecutive weekly progress-monitoring probes",
+    obj:["By Quarter 1, Aarav will decode CVC words with 80% accuracy across 3 trials.",
+         "By Quarter 2, Aarav will decode CVCe (silent-e) words with 80% accuracy across 3 trials.",
+         "By Quarter 3, Aarav will orally read grade-3 decodable passages at 50 WCPM with 80% accuracy."]},
+  math:{emoji:"🔢", name:"Sara", grade:"Grade 4", category:"Specific Learning Disability (Dyscalculia)", domain:"multi-digit computation", subj:"she", poss:"her",
+    caseNotes:"Observation notes: Single-digit addition/subtraction timed probe = 90% correct. Multi-digit regrouping worksheet (20 items) = 8/20 correct (40%). Work samples show numbers frequently lined up by the ones digit only, skipping place-value alignment before solving.",
+    presentLevel:"Sara currently solves single-digit addition and subtraction with 90% accuracy, but solves multi-digit addition with regrouping at only 40% accuracy, often misaligning place-value columns.",
+    vagueGoal:"Sara will get better at math.",
+    specificSkillCorrect:"solve two- and three-digit addition and subtraction problems with regrouping using a place-value strategy",
+    baselineMetric:"40% accuracy on multi-digit regrouping problems",
+    measureType:"weekly curriculum-based math probes scored for percent accuracy",
+    targetCriterion:"80% accuracy across 20 multi-digit problems",
+    condition:"When given a worksheet of 20 grade-4 addition/subtraction problems requiring regrouping",
+    timeframe:"the end of the 2026–27 academic year",
+    trialsCriterion:"4 out of 5 consecutive probes",
+    obj:["By Quarter 1, Sara will correctly align place-value columns in 8/10 problems.",
+         "By Quarter 2, Sara will solve two-digit regrouping problems with 70% accuracy.",
+         "By Quarter 3, Sara will solve three-digit regrouping problems with 75% accuracy."]},
+  behavior:{emoji:"🎯", name:"Kabir", grade:"Grade 5", category:"Other Health Impairment (ADHD)", domain:"on-task / self-regulation behavior", subj:"he", poss:"his",
+    caseNotes:"Observation notes: 15-minute independent work blocks timed across 5 sessions; on-task intervals averaged 4 minutes. Redirection tally: 6–8 verbal prompts per period to return to task. Little to no off-task behavior noted during preferred, high-interest activities.",
+    presentLevel:"Kabir currently remains on-task during independent work for an average of 4 out of every 15 minutes, and requires 6–8 adult redirections per class period.",
+    vagueGoal:"Kabir will behave better in class.",
+    specificSkillCorrect:"remain on-task during independent seatwork using a self-monitoring checklist",
+    baselineMetric:"4 out of 15 minutes on-task (27%), needing 6–8 redirections per period",
+    measureType:"interval on-task recording (momentary time sampling) and a redirection-frequency tally",
+    targetCriterion:"12 out of 15 minutes on-task (80%) with no more than 2 redirections per period",
+    condition:"During independent classroom seatwork periods",
+    timeframe:"the end of the 2026–27 academic year",
+    trialsCriterion:"4 out of 5 consecutive observed sessions",
+    obj:["By Quarter 1, Kabir will remain on-task for 6/15 minutes using a visual timer cue.",
+         "By Quarter 2, Kabir will remain on-task for 9/15 minutes with 4 or fewer redirections.",
+         "By Quarter 3, Kabir will remain on-task for 11/15 minutes with 3 or fewer redirections."]},
+  comm:{emoji:"💬", name:"Meera", grade:"Grade 2", category:"Speech-Language Impairment", domain:"expressive language / requesting via AAC", subj:"she", poss:"her",
+    caseNotes:"Observation notes: 10 structured opportunities per session to request or comment. Single-word response or single AAC icon selected in 3/10 (30%) opportunities. No spontaneous 2-word combinations observed across 3 separate sessions.",
+    presentLevel:"Meera currently uses single-word utterances or her AAC device to request preferred items in 30% of structured opportunities, and rarely combines words spontaneously.",
+    vagueGoal:"Meera will improve her communication skills.",
+    specificSkillCorrect:"produce 2–3 word phrases to request items and comment, using her AAC device or verbal speech",
+    baselineMetric:"30% of opportunities using single words only",
+    measureType:"structured language sampling with frequency data across 10 daily opportunities",
+    targetCriterion:"80% of opportunities using 2–3 word combinations",
+    condition:"When presented with 10 structured opportunities to request or comment during classroom activities",
+    timeframe:"the end of the 2026–27 academic year",
+    trialsCriterion:"3 consecutive data-collection sessions",
+    obj:["By Quarter 1, Meera will combine 2 words to request preferred items in 50% of opportunities.",
+         "By Quarter 2, Meera will combine 2–3 words to comment on activities in 60% of opportunities.",
+         "By Quarter 3, Meera will spontaneously use 2–3 word phrases across settings in 70% of opportunities."]}
+};
+
+function T(str,p){ // template filler
+  return str.replace(/\{name\}/g,p.name).replace(/\{subj\}/g,p.subj).replace(/\{poss\}/g,p.poss).replace(/\{domain\}/g,p.domain);
+}
+
+const LEVELS = [
+ { name:"The Foundation: Present Levels", badge:"PLOP Detective", icon:"📋",
+   teach:"Every IEP goal starts with the Present Level of Performance (PLOP) — a data-based snapshot of where {name} is right now. A strong PLOP names the skill, gives baseline data (numbers, not adjectives), and describes the context. Words like 'struggles with' or 'is behind' are not data.",
+   drillType:"mcq",
+   question:p=>`Which of these is a well-written Present Level statement for ${p.name}?`,
+   correct:p=>p.presentLevel,
+   distractors:p=>[`${p.name} needs to improve.`,`${p.name} is behind ${p.subj==='he'?'his':'her'} peers academically.`,`${p.name} has a disability that affects learning.`],
+   explain:p=>"A real PLOP states the current skill level with numbers, so anyone reading it could picture exactly where the student is today." },
+
+ { name:"Vague vs. Measurable", badge:"Vague-Buster", icon:"🔍",
+   teach:"A goal is only as useful as its measurability: if you can't collect data on it weekly, it isn't measurable. Watch for giveaway words like 'improve', 'understand', or 'try harder' — they sound positive but can't be scored.",
+   drillType:"mcq",
+   question:p=>`${p.name}'s current goal reads: "${p.vagueGoal}" Which rewrite makes it measurable?`,
+   correct:p=>`${p.name} will ${p.specificSkillCorrect}, improving from ${p.baselineMetric} to ${p.targetCriterion}, as measured by ${p.measureType}.`,
+   distractors:p=>[p.vagueGoal,`${p.name} will improve ${p.domain} skills significantly.`,`${p.name} will show growth in ${p.domain} by the end of the year.`],
+   explain:p=>"The measurable version names the exact skill, a starting number, a target number, and the tool used to collect the data." },
+
+ { name:"The SMART Framework", badge:"SMART Scholar", icon:"⭐", drillType:"match",
+   teach:"SMART goals are Specific, Measurable, Achievable, Relevant, and Time-bound. Match each letter to what it actually means in IEP writing — this is the checklist you'll use for the rest of the quest.",
+   pairs:[
+     {term:"Specific", correct:"Names one exact, observable skill or behavior", wrong:"Sounds ambitious and inspiring"},
+     {term:"Measurable", correct:"Includes a number and a way to collect data on it", wrong:"Is written in clear, simple language"},
+     {term:"Achievable", correct:"Is a realistic stretch given the current baseline", wrong:"Matches what the student's classmates are doing"},
+     {term:"Relevant", correct:"Connects to the student's actual need and access to learning", wrong:"Covers as many skills as possible at once"},
+     {term:"Time-bound", correct:"States a clear deadline, usually tied to the IEP review date", wrong:"Is reviewed only if progress seems slow"}
+   ] },
+
+ { name:"Getting Specific", badge:"Specificity Sniper", icon:"🎯",
+   teach:"'Specific' means naming exactly one observable skill — not a subject area, not a general improvement. Ask: could two different teachers watch {name} and agree on whether {subj} did it?",
+   drillType:"mcq",
+   question:p=>`Which option correctly names the SPECIFIC skill for ${p.name}'s goal?`,
+   correct:p=>p.specificSkillCorrect,
+   distractors:p=>[`${p.name} will improve in ${p.domain}.`,`${p.name} will try harder during ${p.domain} activities.`,`${p.name} will complete grade-level ${p.domain} tasks like peers.`],
+   explain:p=>"The specific version names one exact, teachable skill — not a subject area, effort level, or comparison to peers." },
+
+ { name:"Making It Measurable", badge:"Data Collector", icon:"📊",
+   teach:"Measurable goals pair a number with an objective data-collection method — percent accuracy, frequency counts, words per minute, duration, or a rubric — gathered through probes, tallies, or timed samples. Subjective impressions are not measurable.",
+   drillType:"mcq",
+   question:p=>`Which measurement approach best fits ${p.name}'s goal?`,
+   correct:p=>p.measureType,
+   distractors:p=>["The teacher's general impression during class","Parent-reported progress at home","Whether the student seems happier in class"],
+   explain:p=>"Good measures are objective and repeatable — any adult using the same tool would get roughly the same data." },
+
+ { name:"Achievable & Relevant", badge:"Reality Checker", icon:"⚖️",
+   teach:"A goal must stretch {name} without being impossible, and it must connect to a real need. Compare the baseline to the target: is that growth realistic in one year? Does the skill matter for {poss} access to learning?",
+   drillType:"mcq",
+   question:p=>`${p.name}'s baseline is: ${p.baselineMetric}. Which target is achievable AND ambitious?`,
+   correct:p=>p.targetCriterion,
+   distractors:p=>[`${p.name} will perform at grade level with 100% accuracy immediately.`,`${p.name} will remain at the current baseline with no change expected.`],
+   explain:p=>"A good target is a real stretch from baseline — not an instant leap to perfection, and not a goal that expects zero growth." },
+
+ { name:"Time-Bound & Conditions", badge:"Timeline Tactician", icon:"⏱️",
+   teach:"Every goal needs a timeframe (usually one academic year, tied to the IEP review) and a condition — the setting or materials the skill is demonstrated under. Together they answer: by when, and under what circumstances?",
+   drillType:"mcq",
+   question:p=>`Which phrase correctly sets the condition and timeframe for ${p.name}'s goal?`,
+   correct:p=>`${p.condition}, by ${p.timeframe}, ${p.name} will meet the target criterion.`,
+   distractors:p=>[`By ${p.timeframe}, ${p.name} will improve.`,`${p.condition}, ${p.name} will improve.`,`${p.name} will get better soon.`],
+   explain:p=>"The complete version has both pieces: a specific condition (materials/setting) AND a specific deadline. Drop either one and the goal can't be tracked." },
+
+ { name:"Objectives & the Final Goal", badge:"Goal Architect", icon:"🏗️", drillType:"order",
+   teach:"Short-term objectives break the annual goal into smaller measurable steps — usually one per quarter — showing the path from baseline to target. Sequence them from easiest to hardest, then assemble the final SMART goal.",
+   itemsKey:"obj" }
+];
+
+/* ---------- STATE ---------- */
+let state = { profileKey:null, completed:[], xp:0, badges:[], currentLevel:0 };
+
+/* ---------- INIT ---------- */
+function buildProfileGrid(){
+  const grid=document.getElementById('profileGrid');
+  grid.innerHTML='';
+  Object.entries(PROFILES).forEach(([key,p])=>{
+    const el=document.createElement('button');
+    el.className='profile-card';
+    el.innerHTML=`<div class="emoji">${p.emoji}</div><h3>${p.name} · ${p.grade}</h3><div class="tag">${p.category}</div><p>Goal area: ${p.domain}.</p>`;
+    el.onclick=()=>startProfile(key);
+    grid.appendChild(el);
+  });
+}
+function startProfile(key){
+  state={profileKey:key, completed:[], xp:0, badges:[], currentLevel:0};
+  document.getElementById('topTitle').textContent = `🎯 ${PROFILES[key].name}'s Goal Quest`;
+  renderMap();
+  showScreen('map');
+}
+
+/* ---------- SCREEN NAV ---------- */
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+  updateTopbar();
+}
+function updateTopbar(){
+  document.getElementById('xpLabel').textContent = state.xp+' XP';
+  const pct = state.profileKey ? Math.round((state.completed.length/LEVELS.length)*100) : 0;
+  document.getElementById('progFill').style.width = pct+'%';
+}
+
+/* ---------- MAP ---------- */
+function renderMap(){
+  const p=PROFILES[state.profileKey];
+  document.getElementById('mapTitle').textContent = `${p.name}'s Path to a SMART Goal`;
+  document.getElementById('mapSub').textContent = `${p.name} (${p.grade}) · ${p.category} · Present focus: ${p.domain}`;
+  renderGoalBuilder();
+  const trail=document.getElementById('trail');
+  trail.innerHTML='';
+  LEVELS.forEach((lvl,i)=>{
+    const done = state.completed.includes(i);
+    const locked = i>0 && !state.completed.includes(i-1);
+    const node=document.createElement('div');
+    node.className='node'+(done?' done':'')+(locked?' locked':'');
+    node.innerHTML=`<div class="num">${done?'✓':(i+1)}</div>
+      <div class="info"><div class="lvl-name">${lvl.icon} ${lvl.name}</div><div class="lvl-desc">${done?'Completed · '+lvl.badge+' earned':(locked?'Locked':'Tap to start')}</div></div>
+      ${done?'<div class="badge-icon">🏅</div>':''}`;
+    if(!locked) node.onclick=()=>openLevel(i);
+    trail.appendChild(node);
+  });
+  updateTopbar();
+}
+
+function renderGoalBuilder(){
+  const p=PROFILES[state.profileKey];
+  const has=i=>state.completed.includes(i);
+  const specific = has(3) ? p.specificSkillCorrect : '▢▢▢ (Level 4)';
+  const measure = has(4) ? `from ${p.baselineMetric} to ${p.targetCriterion}, as measured by ${p.measureType}` : '▢▢▢ (Level 5)';
+  const cond = has(6) ? `${p.condition}, by ${p.timeframe}` : '▢▢▢ (Level 7)';
+  const html = `<b>YOUR GOAL SO FAR</b>${has(6)?'<span class="filled">'+cond+',</span> ':'<span class="blank">'+cond+',</span> '}
+    <span class="${has(3)?'filled':'blank'}">${p.name} will ${specific}</span>, <span class="${has(4)?'filled':'blank'}">${measure}</span>.`;
+  document.getElementById('goalBuilder').innerHTML = html;
+}
+
+/* ---------- LEVEL ---------- */
+function openLevel(i){
+  state.currentLevel=i;
+  const lvl=LEVELS[i], p=PROFILES[state.profileKey];
+  document.getElementById('lvlNum').textContent=i+1;
+  document.getElementById('lvlName').textContent=lvl.icon+' '+lvl.name;
+  document.getElementById('lvlTeach').textContent=T(lvl.teach,p);
+  document.getElementById('continueBtn').disabled=true;
+  const scenario=document.getElementById('lvlScenario');
+  scenario.innerHTML = `<b>RAW OBSERVATION NOTES — ${p.name}</b>${p.caseNotes}`;
+  const drillEl=document.getElementById('lvlDrill');
+  drillEl.innerHTML='';
+
+  if(lvl.drillType==='mcq'){
+    const opts = shuffle([{t:lvl.correct(p),c:true}, ...lvl.distractors(p).map(t=>({t,c:false}))]);
+    drillEl.innerHTML = `<div class="q">${lvl.question(p)}</div>` +
+      opts.map((o,idx)=>`<button class="opt" data-idx="${idx}">${o.t}</button>`).join('') +
+      `<div class="explain" id="expl"></div>`;
+    drillEl.querySelectorAll('.opt').forEach((btn,idx)=>{
+      btn.onclick=()=>{
+        drillEl.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+        if(opts[idx].c){ btn.classList.add('correct'); markSolved(true,lvl.explain(p)); }
+        else{ btn.classList.add('wrong'); const c=[...drillEl.querySelectorAll('.opt')][opts.findIndex(o=>o.c)]; c.classList.add('correct'); markSolved(false,lvl.explain(p)); }
+      };
+    });
+  }
+  else if(lvl.drillType==='match'){
+    let solvedCount=0;
+    drillEl.innerHTML = `<div class="q">Match each SMART letter to what it really means:</div>` +
+      lvl.pairs.map((pair,pi)=>{
+        const opts = shuffle([{t:pair.correct,c:true},{t:pair.wrong,c:false}]);
+        return `<div class="match-row"><div class="match-term"><b>${pair.term}</b></div>
+          ${opts.map((o,oi)=>`<button class="match-btn" data-pi="${pi}" data-c="${o.c}">${o.t}</button>`).join('')}</div>`;
+      }).join('') + `<div class="explain" id="expl">Match all five to continue.</div>`;
+    document.getElementById('expl').classList.add('show');
+    drillEl.querySelectorAll('.match-btn').forEach(btn=>{
+      btn.onclick=()=>{
+        const row=btn.closest('.match-row');
+        if(row.dataset.solved) return;
+        if(btn.dataset.c==='true'){
+          btn.classList.add('correct'); row.dataset.solved='1'; solvedCount++;
+          row.querySelectorAll('.match-btn').forEach(b=>b.disabled=true);
+          if(solvedCount===lvl.pairs.length) markSolved(true,"Nice — you now have all five SMART criteria as a working checklist.");
+        } else {
+          btn.classList.add('wrong');
+          setTimeout(()=>btn.classList.remove('wrong'),500);
+        }
+      };
+    });
+  }
+  else if(lvl.drillType==='order'){
+    const items = p[lvl.itemsKey].map((t,origIdx)=>({t,origIdx}));
+    const shuffled = shuffle(items.slice());
+    drillEl.innerHTML = `<div class="q">Put ${p.name}'s short-term objectives in the right order (Quarter 1 → Quarter 3):</div>` +
+      shuffled.map((it,i)=>`<div class="order-row"><select data-orig="${it.origIdx}">
+        <option value="">Order…</option><option value="1">1st</option><option value="2">2nd</option><option value="3">3rd</option>
+      </select><span style="font-size:13.5px;">${it.t}</span></div>`).join('') +
+      `<div class="row"><button class="btn ghost" id="checkOrder">Check order</button></div>
+       <div class="explain" id="expl"></div>`;
+    document.getElementById('checkOrder').onclick=()=>{
+      const selects=[...drillEl.querySelectorAll('select')];
+      const vals=selects.map(s=>s.value);
+      const ok = vals.every(v=>v!=='') && selects.every(s=>Number(s.dataset.orig)+1===Number(s.value));
+      if(ok){ markSolved(true,"Perfect sequence — each objective builds on the one before it, from easiest to hardest."); selects.forEach(s=>s.disabled=true); }
+      else{ const expl=document.getElementById('expl'); expl.textContent="Not quite — objectives should move from the easiest sub-skill to the hardest. Try again."; expl.classList.add('show'); }
+    };
+  }
+  showScreen('level');
+}
+
+function markSolved(correct, explanation){
+  const expl=document.getElementById('expl');
+  if(expl){ expl.textContent = (correct?"✔ ":"✘ ")+explanation; expl.classList.add('show'); }
+  document.getElementById('continueBtn').disabled=false;
+}
+
+function completeLevel(){
+  const i=state.currentLevel, lvl=LEVELS[i];
+  if(!state.completed.includes(i)){
+    state.completed.push(i);
+    state.xp+=100;
+    if(!state.badges.includes(lvl.badge)) state.badges.push(lvl.badge);
+    showToast('+100 XP · '+lvl.badge+' badge earned');
+  }
+  if(state.completed.length===LEVELS.length){ renderFinal(); showScreen('final'); }
+  else{ renderMap(); showScreen('map'); }
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast'); t.textContent='🏅 '+msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+/* ---------- FINAL ---------- */
+function renderFinal(){
+  const p=PROFILES[state.profileKey];
+  document.getElementById('finalSub').textContent = `${p.name}'s complete, measurable annual SMART goal — built piece by piece.`;
+  document.getElementById('finalGoal').textContent =
+    `${p.condition}, by ${p.timeframe}, ${p.name} will ${p.specificSkillCorrect}, improving from ${p.baselineMetric} to ${p.targetCriterion}, as measured by ${p.measureType} and documented across ${p.trialsCriterion}.`;
+  document.getElementById('finalObjs').innerHTML = p.obj.map(o=>`<li>${o}</li>`).join('');
+  document.getElementById('finalBadges').innerHTML = state.badges.map(b=>`<span>🏅 ${b}</span>`).join('');
+}
+
+/* ---------- UTIL ---------- */
+function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }
+
+buildProfileGrid();
+</script>
+</body>
+</html>
